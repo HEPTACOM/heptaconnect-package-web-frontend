@@ -1,14 +1,17 @@
 {
-    "name": "heptacom/heptaconnect-repository-base",
-    "description": "HEPTAconnect package",
+    "name": "heptacom/heptaconnect-package-web-frontend",
+    "description": "HEPTAconnect Package for Web Frontend",
     "license": [
         "AGPL-3.0-or-later",
         "proprietary"
     ],
     "type": "library",
     "keywords": [
-        "heptaconnect-dataset",
-        "heptaconnect-adapter"
+        "heptaconnect",
+        "heptaconnect-package",
+        "bootstrap5",
+        "admin-ui",
+        "twig"
     ],
     "authors": [
         {
@@ -16,8 +19,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/HEPTACOM/heptaconnect-repository-base/issues",
-        "source": "https://github.com/HEPTACOM/heptaconnect-repository-base",
+        "issues": "https://github.com/HEPTACOM/heptaconnect-package-web-frontend/issues",
+        "source": "https://github.com/HEPTACOM/heptaconnect-package-web-frontend",
         "docs": "https://heptaconnect.io/",
         "rss": "https://heptaconnect.io/news/rss2.xml"
     },
@@ -39,12 +42,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Heptacom\\HeptaConnect\\": "src/"
+            "Heptacom\\HeptaConnect\\Package\\WebFrontend\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Heptacom\\HeptaConnect\\Test\\": "test/"
+            "Heptacom\\HeptaConnect\\Package\\WebFrontend\\Test\\": "test/"
         }
     },
     "config": {

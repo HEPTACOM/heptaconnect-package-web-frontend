@@ -1,10 +1,24 @@
-# repo-base
+# Web Frontend Package
 #### This is part of HEPTACOM solutions for medium and large enterprises.
 
 ## Description
 
-This is a HEPTAconnect package.
+This is a HEPTAconnect package to build web frontends for portals and integrations.
 Read more in the [documentation](https://heptaconnect.io/).
+
+
+### Features
+
+* Twig templates to build UI
+* Session utilities
+* Login
+* AccessProtection
+* ErrorHandler
+* Notification
+* PageRenderer
+* Twig
+* AssetHandler
+* UiHandlerContract
 
 
 ## System requirements
@@ -25,13 +39,13 @@ See the attached [CHANGELOG.md](./CHANGELOG.md) file for a complete version hist
 
 ## Contributing
 
-Thank you for considering contributing to this package! Be sure to sign the [CLA](./CLA.md) after creating the pull request. [![CLA assistant](https://cla-assistant.io/readme/badge/HEPTACOM/heptaconnect-repo-base)](https://cla-assistant.io/HEPTACOM/heptaconnect-repo-base)
+Thank you for considering contributing to this package! Be sure to sign the [CLA](./CLA.md) after creating the pull request. [![CLA assistant](https://cla-assistant.io/readme/badge/HEPTACOM/heptaconnect-package-web-frontend)](https://cla-assistant.io/HEPTACOM/heptaconnect-package-web-frontend)
 
 
 ### Steps to contribute
 
 1. Fork the repository
-2. `git clone yourname/heptaconnect-repo-base`
+2. `git clone yourname/heptaconnect-package-web-frontend`
 3. Make your changes to master branch
 4. Create your Pull-Request
 
