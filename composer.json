@@ -18,6 +18,7 @@
             "name": "HEPTACOM GmbH"
         }
     ],
+    "homepage": "https://heptaconnect.io",
     "support": {
         "issues": "https://github.com/HEPTACOM/heptaconnect-package-web-frontend/issues",
         "source": "https://github.com/HEPTACOM/heptaconnect-package-web-frontend",
@@ -53,8 +54,8 @@
     "config": {
         "allow-plugins": {
             "infection/extension-installer": true,
-            "ocramius/package-versions": true
+            "ocramius/package-versions": true,
+            "php-http/discovery": true
         }
-    },
-    "homepage": "https://heptaconnect.io"
+    }
 }
