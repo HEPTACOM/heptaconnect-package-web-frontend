@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract;
 
 use Heptacom\HeptaConnect\Dataset\Base\ScalarCollection\StringCollection;
 use Heptacom\HeptaConnect\Dataset\Base\Support\AbstractObjectCollection;

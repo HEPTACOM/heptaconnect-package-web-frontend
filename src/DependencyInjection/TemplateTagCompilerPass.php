@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\WebFrontendPackage;
 use Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalContract;
 use Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalExtensionContract;

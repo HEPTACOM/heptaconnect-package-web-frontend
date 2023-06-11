@@ -14,7 +14,7 @@
 
         <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Debug\DebugTwigEnvironmentFactory"
-            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactoryInterface"
+            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface"
         />
 
         <service

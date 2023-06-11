@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy;
 
 use Heptacom\HeptaConnect\Dataset\Base\ScalarCollection\StringCollection;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeCollection;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeCollection;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 

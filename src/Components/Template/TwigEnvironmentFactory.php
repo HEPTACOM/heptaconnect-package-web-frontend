@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeCollection;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\ExtendsTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\IncludeTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\TemplateFinder;

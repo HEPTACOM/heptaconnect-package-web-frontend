@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Debug;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactoryInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 

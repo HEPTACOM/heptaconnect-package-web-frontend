@@ -12,13 +12,13 @@
         </prototype>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeCollection"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeCollection"
         >
             <argument type="tagged_iterator" tag="web_frontend.theme"/>
         </service>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactoryInterface"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface"
             class="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactory"
             autowire="true"
         >

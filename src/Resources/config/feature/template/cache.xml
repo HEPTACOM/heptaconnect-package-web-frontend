@@ -17,7 +17,7 @@
 
         <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CachedTwigEnvironmentFactory"
-            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactoryInterface"
+            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface"
         >
             <argument key="$cacheDir">%web_frontend.template.cache_dir%</argument>
         </service>

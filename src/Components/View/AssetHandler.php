@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\View;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerContract;
 use Psr\Http\Message\ResponseInterface;

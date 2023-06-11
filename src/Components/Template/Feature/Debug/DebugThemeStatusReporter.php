@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Debug;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeCollection;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeCollection;
 use Heptacom\HeptaConnect\Portal\Base\StatusReporting\Contract\StatusReporterContract;
 use Heptacom\HeptaConnect\Portal\Base\StatusReporting\Contract\StatusReportingContextInterface;
 
