@@ -35,11 +35,24 @@ final class WebFrontendPackage extends PackageContract implements ThemeInterface
         self::featureTemplateCache($containerBuilder);
     }
 
+    public static function featureDebug(ContainerBuilder $containerBuilder): void
+    {
+        self::featureTemplateDebug($containerBuilder);
+    }
+
     public static function featureTemplateCache(ContainerBuilder $containerBuilder): void
     {
         $containerConfigurationPath = __DIR__ . '/Resources/config/feature/template';
         $xmlLoader = new XmlFileLoader($containerBuilder, new FileLocator($containerConfigurationPath));
 
         $xmlLoader->load($containerConfigurationPath . '/cache.xml');
+    }
+
+    public static function featureTemplateDebug(ContainerBuilder $containerBuilder): void
+    {
+        $containerConfigurationPath = __DIR__ . '/Resources/config/feature/template';
+        $xmlLoader = new XmlFileLoader($containerBuilder, new FileLocator($containerConfigurationPath));
+
+        $xmlLoader->load($containerConfigurationPath . '/debug.xml');
     }
 }

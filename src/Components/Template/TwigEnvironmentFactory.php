@@ -10,7 +10,6 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\Temp
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\AssetHandler;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\HttpHandlerUrlProviderInterface;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\Extra\String\StringExtension;
 use Twig\Loader\ChainLoader;
@@ -46,15 +45,7 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
             $chainLoader->addLoader($loader);
         }
 
-        // TODO: add config option to toggle debug mode
-        $environment = new Environment($chainLoader, [
-            'debug' => true,
-            'auto_reload' => true,
-        ]);
-
-        if ($environment->isDebug()) {
-            $environment->addExtension(new DebugExtension());
-        }
+        $environment = new Environment($chainLoader);
 
         $environment->addFunction(new TwigFunction(
             'asset',
