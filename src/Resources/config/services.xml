@@ -13,6 +13,7 @@
             <exclude>../../Components/Notification/Notification.php</exclude>
             <exclude>../../Components/Session/Session.php</exclude>
             <exclude>../../Components/Session/SessionStorage.php</exclude>
+            <exclude>../../Components/Template/Feature</exclude>
             <exclude>../../Components/Template/Hierarchy</exclude>
             <exclude>../../Components/Template/TwigCache.php</exclude>
             <exclude>../../Components/Template/TwigEnvironmentFactory.php</exclude>

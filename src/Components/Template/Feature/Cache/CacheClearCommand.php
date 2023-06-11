@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache;
 
 use Heptacom\HeptaConnect\Portal\Base\File\Filesystem\Contract\FilesystemInterface;
 use Heptacom\HeptaConnect\Portal\Base\StatusReporting\Contract\StatusReporterContract;
@@ -12,6 +12,7 @@ final class CacheClearCommand extends StatusReporterContract
 {
     public function __construct(
         private FilesystemInterface $filesystem,
+        private string $cacheDir,
     ) {
     }
 
@@ -22,7 +23,7 @@ final class CacheClearCommand extends StatusReporterContract
 
     protected function run(StatusReportingContextInterface $context): array
     {
-        $this->delete($this->filesystem->toStoragePath('var/cache/templates'));
+        $this->delete($this->filesystem->toStoragePath($this->cacheDir));
 
         return [$this->supportsTopic() => true];
     }

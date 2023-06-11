@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache;
 
 use Twig\Cache\FilesystemCache;
 

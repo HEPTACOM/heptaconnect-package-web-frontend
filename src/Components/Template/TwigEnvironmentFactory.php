@@ -8,7 +8,6 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\Exte
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\IncludeTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\TemplateFinder;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\AssetHandler;
-use Heptacom\HeptaConnect\Portal\Base\File\Filesystem\Contract\FilesystemInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\HttpHandlerUrlProviderInterface;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -36,7 +35,6 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
     public function __construct(
         iterable $themes,
         iterable $extensions,
-        private FilesystemInterface $filesystem,
         private HttpHandlerUrlProviderInterface $urlProvider,
         private AssetHandler $assetHandler,
     ) {
@@ -58,7 +56,6 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
         $environment = new Environment($chainLoader, [
             'debug' => true,
             'auto_reload' => true,
-            'cache' => new TwigCache($this->filesystem->toStoragePath('var/cache/templates')),
         ]);
 
         if ($environment->isDebug()) {

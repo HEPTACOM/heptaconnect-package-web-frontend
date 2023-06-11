@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <parameters>
+        <parameter type="string" key="web_frontend.template.cache_dir">var/cache/templates</parameter>
+    </parameters>
+    <services>
+        <defaults
+            autoconfigure="true"
+            autowire="true"
+        >
+            <bind key="$decorated" type="service" id=".inner"/>
+        </defaults>
+
+        <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CachedTwigEnvironmentFactory"
+            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactoryInterface"
+        >
+            <argument key="$cacheDir">%web_frontend.template.cache_dir%</argument>
+        </service>
+
+        <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CacheClearCommand"
+        >
+            <argument key="$cacheDir">%web_frontend.template.cache_dir%</argument>
+        </service>
+    </services>
+</container>
