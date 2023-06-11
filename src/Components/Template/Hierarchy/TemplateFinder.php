@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeInterface;
+use Heptacom\HeptaConnect\Dataset\Base\ScalarCollection\StringCollection;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemeCollection;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 
 final class TemplateFinder
 {
-    private array $namespaceHierarchy;
+    private StringCollection $namespaceHierarchy;
 
-    /**
-     * @param array<ThemeInterface> $themes
-     */
     public function __construct(
         private LoaderInterface $loader,
-        array $themes,
+        private ThemeCollection $themes,
     ) {
-        $this->namespaceHierarchy = \array_reverse(\array_map(
-            static fn (ThemeInterface $theme): string => $theme->getThemeName(),
-            $themes
-        ));
+        $this->namespaceHierarchy = $this->themes->getRenderOrder()->getNames();
     }
 
     public function getTemplateName(string $template): string
@@ -46,7 +41,7 @@ final class TemplateFinder
         $sourceBundleName = $source ? $this->getSourceBundleName($source) : null;
         $originalTemplate = $source ? null : $template;
 
-        $queue = $this->namespaceHierarchy;
+        $queue = $this->namespaceHierarchy->asArray();
         $modifiedQueue = $queue;
 
         // If we are trying to load the same file as the template, we do are not allowed to search the hierarchy

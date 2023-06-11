@@ -4,6 +4,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
+    <imports>
+        <import resource="components/template.xml"/>
+    </imports>
     <services>
         <defaults>
             <bind key="Psr\SimpleCache\CacheInterface" type="service" id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"/>
@@ -13,19 +16,14 @@
             <exclude>../../Components/Notification/Notification.php</exclude>
             <exclude>../../Components/Session/Session.php</exclude>
             <exclude>../../Components/Session/SessionStorage.php</exclude>
-            <exclude>../../Components/Template/Feature</exclude>
-            <exclude>../../Components/Template/Hierarchy</exclude>
-            <exclude>../../Components/Template/TwigCache.php</exclude>
-            <exclude>../../Components/Template/TwigEnvironmentFactory.php</exclude>
+            <exclude>../../Components/Template</exclude>
         </prototype>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactoryInterface"
-            class="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\TwigEnvironmentFactory"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionService"
             autowire="true"
         >
-            <argument type="tagged_iterator" tag="web_frontend.theme"/>
-            <argument type="tagged_iterator" tag="twig.extension"/>
+            <argument type="tagged_iterator" tag="web_frontend.ui_handler"/>
         </service>
 
         <service

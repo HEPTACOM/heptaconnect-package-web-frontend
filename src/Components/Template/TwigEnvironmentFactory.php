@@ -19,26 +19,20 @@ use Twig\TwigFunction;
 
 final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
 {
-    /**
-     * @var array<ThemeInterface>
-     */
-    private array $themes;
+    private ThemeCollection $themes;
 
     /**
      * @var array<ExtensionInterface>
      */
     private array $extensions;
 
-    /**
-     * @param iterable<ThemeInterface> $themes
-     */
     public function __construct(
-        iterable $themes,
+        ThemeCollection $themes,
         iterable $extensions,
         private HttpHandlerUrlProviderInterface $urlProvider,
         private AssetHandler $assetHandler,
     ) {
-        $this->themes = \iterable_to_array($themes);
+        $this->themes = $themes->getRenderOrder();
         $this->extensions = \iterable_to_array($extensions);
     }
 
