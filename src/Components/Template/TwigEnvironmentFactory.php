@@ -50,7 +50,7 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
 
         foreach ($this->themes as $theme) {
             $loader = new FilesystemLoader();
-            $loader->setPaths($theme->getTemplatesPath(), $theme->getName());
+            $loader->setPaths($theme->getThemeTemplatesPath(), $theme->getThemeName());
             $chainLoader->addLoader($loader);
         }
 

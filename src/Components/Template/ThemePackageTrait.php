@@ -6,7 +6,7 @@ namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template;
 
 trait ThemePackageTrait
 {
-    public function getTemplatesPath(): string
+    public function getThemeTemplatesPath(): string
     {
         return \implode(\DIRECTORY_SEPARATOR, [
             $this->getPath(),
@@ -15,7 +15,7 @@ trait ThemePackageTrait
         ]);
     }
 
-    public function getAssetPath(): string
+    public function getThemeAssetPath(): string
     {
         return \implode(\DIRECTORY_SEPARATOR, [
             $this->getPath(),
@@ -24,7 +24,7 @@ trait ThemePackageTrait
         ]);
     }
 
-    public function getName(): string
+    public function getThemeName(): string
     {
         return (new \ReflectionClass($this))->getShortName();
     }

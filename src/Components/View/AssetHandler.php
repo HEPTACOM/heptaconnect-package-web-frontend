@@ -28,7 +28,7 @@ final class AssetHandler extends HttpHandlerContract
         private StreamFactoryInterface $streamFactory
     ) {
         foreach ($themes as $theme) {
-            $this->staticFilesPaths[] = \rtrim($theme->getAssetPath(), '/') . '/';
+            $this->staticFilesPaths[] = \rtrim($theme->getThemeAssetPath(), '/') . '/';
         }
     }
 
