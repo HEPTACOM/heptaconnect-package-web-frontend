@@ -9,7 +9,6 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigE
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\ExtendsTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\IncludeTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\TemplateFinder;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\AssetHandler;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\HttpHandlerUrlProviderInterface;
 use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
@@ -31,7 +30,7 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
         ThemeCollection $themes,
         iterable $extensions,
         private HttpHandlerUrlProviderInterface $urlProvider,
-        private AssetHandler $assetHandler,
+        private AssetMiddleware $assetMiddleware,
     ) {
         $this->themes = $themes->getRenderOrder();
         $this->extensions = \iterable_to_array($extensions);
@@ -78,9 +77,9 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
 
     private function createAssetUrl(string $assetPath): string
     {
-        $queryParameters = ['file' => $assetPath];
-
-        $fileHash = $this->assetHandler->getFileHash($assetPath);
+        $assetPath = \ltrim($assetPath, '/');
+        $fileHash = $this->assetMiddleware->getFileHash($assetPath);
+        $queryParameters = [];
 
         if (\is_string($fileHash)) {
             $queryParameters['v'] = $fileHash;
@@ -89,7 +88,7 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
         $query = \http_build_query($queryParameters);
 
         return (string) $this->urlProvider
-            ->resolve($this->assetHandler->getPath())
+            ->resolve($this->assetMiddleware->getAssetUrlPath() . $assetPath)
             ->withQuery($query);
     }
 

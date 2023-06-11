@@ -27,11 +27,9 @@ final class TemplateFinder
             return $template;
         }
 
-        $template = explode('/', $template);
-        array_shift($template);
-        $template = implode('/', $template);
+        $template = explode('/', $template, 2);
 
-        return $template;
+        return $template[1] ?? $template[0];
     }
 
     public function find(string $template, $ignoreMissing = false, ?string $source = null): string
@@ -78,7 +76,7 @@ final class TemplateFinder
                 return $templatePath;
             }
 
-            throw new LoaderError(sprintf('Unable to load template "%s". (Looked into: %s)', $templatePath, implode(', ', array_values($modifiedQueue))));
+            throw new LoaderError(\sprintf('Unable to load template "%s". (Looked into: %s)', $templatePath, implode(', ', array_values($modifiedQueue))));
         }
 
         // if no other bundle extends the requested template, load the original template
@@ -90,19 +88,17 @@ final class TemplateFinder
             return $templatePath;
         }
 
-        throw new LoaderError(sprintf('Unable to load template "%s". (Looked into: %s)', $templatePath, implode(', ', array_values($modifiedQueue))));
+        throw new LoaderError(\sprintf('Unable to load template "%s". (Looked into: %s)', $templatePath, implode(', ', array_values($modifiedQueue))));
     }
 
     private function getSourceBundleName(string $source): ?string
     {
-        if (mb_strpos($source, '@') !== 0) {
+        if (\mb_strpos($source, '@') !== 0) {
             return null;
         }
 
-        $source = explode('/', $source);
-        $source = array_shift($source);
-        $source = $source ? ltrim($source, '@') : null;
+        $source = explode('/', $source, 2);
 
-        return $source ?: null;
+        return \ltrim($source[0], '@');
     }
 }

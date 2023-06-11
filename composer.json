@@ -27,7 +27,6 @@
     },
     "require": {
         "php": ">=8.0",
-        "ext-fileinfo": "*",
         "ext-filter": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -52,6 +51,7 @@
         "nikic/php-parser": "4.7.0"
     },
     "suggest": {
+        "ext-fileinfo": "If available, assets will get automatic mime types assigned",
         "ext-zend opcache": "If available op cache will be cleared",
         "twig/intl-extra": "Is a nice package for formatting and i18n. If you require it, it will be loaded automatically. Excluded as it requires symfony/intl which is a big dependency"
     },
