@@ -6,6 +6,7 @@
 >
     <services>
         <prototype namespace="Heptacom\HeptaConnect\Package\WebFrontend\" resource="../../">
+            <exclude>../../Components/Notification/Notification.php</exclude>
             <exclude>../../Components/Template/Hierarchy</exclude>
             <exclude>../../Components/Template/TwigCache.php</exclude>
             <exclude>../../Components/Template/TwigEnvironmentFactory.php</exclude>
@@ -25,5 +26,7 @@
         >
             <argument type="tagged_iterator" tag="web_frontend.theme"/>
         </service>
+
+        <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag"/>
     </services>
 </container>
