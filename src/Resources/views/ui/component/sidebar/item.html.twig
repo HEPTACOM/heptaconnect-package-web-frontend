@@ -1,0 +1,37 @@
+{% if sidebarItemTarget is not defined %}
+    {% if sidebarItemTargetPage is defined %}
+        {% set sidebarItemTarget = path(sidebarItemTargetPage) %}
+    {% endif %}
+{% endif %}
+
+{% if sidebarItemTargetPage is defined %}
+    {% set isActive = (sidebarItemTargetPage is same as(currentPage)) %}
+{% else %}
+    {% set isActive = false %}
+{% endif %}
+
+<li>
+    {% block sidebar_item %}
+        {% if sidebarItemTarget is defined %}
+            <a href="{{ sidebarItemTarget }}"
+               {% if sidebarItemTitle is defined %}title="{{ sidebarItemTitle }}"{% endif %}
+               class="nav-link text-nowrap d-flex gap-2{% if isActive %} active{% endif %}">
+                {% block sidebar_item_inner %}
+                    {% if sidebarItemIcon is defined %}
+                        <i class="bi bi-{{ sidebarItemIcon }}"></i>
+                    {% endif %}
+
+                    {% if sidebarItemTitle is defined %}
+                        <span class="sidebar-collapsed-hidden">{{ sidebarItemTitle }}</span>
+                    {% endif %}
+                {% endblock %}
+            </a>
+        {% else %}
+            <span
+               {% if sidebarItemTitle is defined %}title="{{ sidebarItemTitle }}"{% endif %}
+               class="nav-link text-nowrap d-flex gap-2{% if isActive %} active{% endif %}">
+                {{ block('sidebar_item_inner') }}
+            </span>
+        {% endif %}
+    {% endblock %}
+</li>

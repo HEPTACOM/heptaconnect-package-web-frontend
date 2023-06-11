@@ -1,0 +1,50 @@
+{% sw_extends '@WebFrontendPackage/ui/_base/layout.html.twig' %}
+{# @var page \Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\LockscreenPage #}
+
+{% block css %}
+    {% sw_include '@WebFrontendPackage/ui/page/lockscreen/css/lockscreen.css' %}
+{% endblock %}
+
+{% block layout %}
+    <div class="d-flex align-items-center py-4 bg-body-tertiary">
+        <main class="form-signin w-100 m-auto" style="max-width: 300px">
+            <form action="{{ path('_access/login') }}" method="post">
+                <div class="mb-3 text-center">
+                    <img src="{{ sidebarLogoUrl|default(asset('icon/heptaconnect-logo.png')) }}"
+                         alt="{{ sidebarLogoAlt|default('Logo: HEPTAconnect') }}"
+                         style="width: 60px">
+                </div>
+
+                <div class="form-floating">
+                    <input type="text"
+                           class="form-control rounded-bottom-0{% if page.error %} border-danger{% endif %}"
+                           style="margin-bottom: -1px"
+                           id="floatingInput"
+                           name="username"
+                           tabindex="1"
+                           placeholder="username"
+                           value="{{ page.username }}">
+
+                    <label for="floatingInput"{% if page.error %} class="text-danger"{% endif %}>Username</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password"
+                           class="form-control rounded-top-0{% if page.error %} border-danger{% endif %}"
+                           id="floatingPassword"
+                           name="password"
+                           tabindex="2"
+                           placeholder="password">
+
+                    <label for="floatingPassword"{% if page.error %} class="text-danger"{% endif %}>Password</label>
+                </div>
+
+                <button class="btn btn-primary mt-3 py-2 w-100" type="submit" tabindex="3">
+                    Sign in
+                </button>
+            </form>
+        </main>
+    </div>
+{% endblock %}
+
+{% block application_settings_modal %}{% endblock %}

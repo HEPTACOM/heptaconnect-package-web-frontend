@@ -1,0 +1,22 @@
+.editor {
+    line-height: var(--bs-body-line-height);
+    min-height: 100%;
+}
+
+.editor textarea {
+    line-height: var(--bs-body-line-height);
+    resize: none;
+}
+
+.editor .line-numbers {
+    text-align: right;
+}
+
+.editor .line-numbers span {
+    counter-increment: linenumber;
+}
+
+.editor .line-numbers span::before {
+    content: counter(linenumber);
+    display: block;
+}

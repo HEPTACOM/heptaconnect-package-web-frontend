@@ -1,0 +1,37 @@
+{% block sidebar_header %}
+    {% sw_include '@WebFrontendPackage/ui/component/sidebar/header.html.twig' %}
+{% endblock %}
+
+{% block sidebar_content %}
+    {% sw_include '@WebFrontendPackage/ui/component/sidebar/scrollable-content.html.twig' %}
+{% endblock %}
+
+{% block sidebar_footer %}
+    <ul class="nav nav-pills flex-column">
+        {% embed '@WebFrontendPackage/ui/component/sidebar/item.html.twig' %}
+            {% block sidebar_item %}
+                <a href="#"
+                   title="Collapse"
+                   class="nav-link text-nowrap"
+                   data-toggle="sidebar-collapse">
+                    <i class="bi bi-arrows-collapse"></i>
+                    <i class="bi bi-arrows-expand"></i>
+                    <span class="sidebar-collapsed-hidden">Collapse</span>
+                </a>
+            {% endblock %}
+        {% endembed %}
+
+        {% embed '@WebFrontendPackage/ui/component/sidebar/item.html.twig' %}
+            {% block sidebar_item %}
+                <a href="#"
+                   title="Application settings"
+                   class="nav-link text-nowrap"
+                   data-bs-toggle="modal"
+                   data-bs-target="#application-settings-modal">
+                    <i class="bi bi-gear"></i>
+                    <span class="sidebar-collapsed-hidden">Application settings</span>
+                </a>
+            {% endblock %}
+        {% endembed %}
+    </ul>
+{% endblock %}

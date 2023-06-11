@@ -1,0 +1,9 @@
+<div class="d-flex align-items-center gap-2">
+    <img src="{{ sidebarLogoUrl|default(asset('icon/heptaconnect-logo.png')) }}"
+         alt="{{ sidebarLogoAlt|default('Logo: HEPTAconnect') }}"
+         class="sidebar-logo">
+    <div class="sidebar-collapsed-hidden">
+        <div class="fs-4">{{ sidebarHeadline|default('HEPTAconnect') }}</div>
+        <div class="fs-6">{{ sidebarSubline|default('') }}</div>
+    </div>
+</div>

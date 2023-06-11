@@ -1,0 +1,12 @@
+<div class="editor d-inline-flex font-monospace w-100 py-2">
+    <div class="line-numbers text-body-tertiary border-end px-2 pb-5">
+        <span></span>
+    </div>
+
+    <textarea
+        class="form-control bg-transparent border-0 rounded-0 p-0 ps-2 shadow-none"
+        style="white-space: pre"
+        {% if editorName %}name="{{ editorName }}"{% endif %}
+        {% if editorDisabled %}readonly="readonly"{% endif %}
+    >{{ editorText }}</textarea>
+</div>

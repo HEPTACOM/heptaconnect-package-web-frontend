@@ -1,0 +1,15 @@
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    {% for notification in notifications %}
+        {% block notification %}
+            <div class="toast align-items-center text-bg-{{ notification.type }} border-0">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ notification.message }}
+                    </div>
+
+                    <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        {% endblock %}
+    {% endfor %}
+</div>

@@ -1,0 +1,27 @@
+.sidebar {
+    width: 280px;
+    transition: width .15s ease-in-out;
+}
+
+.sidebar .sidebar-logo {
+    width: 60px;
+    max-width: 100%;
+}
+
+.sidebar.sidebar-collapsed {
+    width: 65px;
+}
+
+.sidebar.sidebar-collapsed .sidebar-collapsed-hidden {
+    display: none;
+}
+
+.sidebar.sidebar-collapsed [data-toggle="sidebar-collapse"] .bi-arrows-collapse,
+.sidebar:not(.sidebar-collapsed) [data-toggle="sidebar-collapse"] .bi-arrows-expand {
+    display: none;
+}
+
+.sidebar [data-toggle="sidebar-collapse"] .bi-arrows-expand::before,
+.sidebar [data-toggle="sidebar-collapse"] .bi-arrows-collapse::before {
+    transform: rotate(90deg);
+}

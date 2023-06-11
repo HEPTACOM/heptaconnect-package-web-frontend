@@ -1,0 +1,8 @@
+{
+    "namespaces": [
+        {
+            "path": "src/Resources/views",
+            "namespace": "WebFrontendPackage"
+        }
+    ]
+}
