@@ -15,9 +15,9 @@ final class DebugTwigEnvironmentFactory implements TwigEnvironmentFactoryInterfa
     ) {
     }
 
-    public function factory(): Environment
+    public function createTwigEnvironment(): Environment
     {
-        $result = $this->decorated->factory();
+        $result = $this->decorated->createTwigEnvironment();
 
         $result->enableDebug();
         $result->enableAutoReload();

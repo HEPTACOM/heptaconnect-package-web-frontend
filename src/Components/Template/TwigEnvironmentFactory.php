@@ -37,7 +37,7 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
         $this->extensions = \iterable_to_array($extensions);
     }
 
-    public function factory(): Environment
+    public function createTwigEnvironment(): Environment
     {
         $chainLoader = new ChainLoader();
 

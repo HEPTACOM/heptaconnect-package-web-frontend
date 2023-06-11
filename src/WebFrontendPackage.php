@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Heptacom\HeptaConnect\Package\WebFrontend;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeInterface;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\ThemePackageTrait;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Utility\ThemePackageTrait;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\ControllerPreparationCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\RegisterSuggestedTwigExtensionsCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\RemovePagesCompilerPass;

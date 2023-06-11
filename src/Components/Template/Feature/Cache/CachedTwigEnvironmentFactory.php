@@ -17,9 +17,9 @@ final class CachedTwigEnvironmentFactory implements TwigEnvironmentFactoryInterf
     ) {
     }
 
-    public function factory(): Environment
+    public function createTwigEnvironment(): Environment
     {
-        $result = $this->decorated->factory();
+        $result = $this->decorated->createTwigEnvironment();
 
         $result->setCache(new TwigCache($this->filesystem->toStoragePath($this->cacheDir)));
 

@@ -8,5 +8,8 @@ use Twig\Environment;
 
 interface TwigEnvironmentFactoryInterface
 {
-    public function factory(): Environment;
+    /**
+     * Create a new twig environment to render web frontends.
+     */
+    public function createTwigEnvironment(): Environment;
 }

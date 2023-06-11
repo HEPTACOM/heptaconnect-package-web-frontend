@@ -23,7 +23,7 @@ final class PageRenderer implements PageRendererInterface
 
     public function render(AbstractPage $page, ?ServerRequestInterface $request = null): ResponseInterface
     {
-        $twig = $this->twigEnvironmentFactory->factory();
+        $twig = $this->twigEnvironmentFactory->createTwigEnvironment();
 
         $nonce = \bin2hex(\random_bytes(16));
 
