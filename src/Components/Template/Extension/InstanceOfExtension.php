@@ -18,9 +18,20 @@ final class InstanceOfExtension extends AbstractExtension
         ];
     }
 
-    public function isInstanceOf($var, $class): bool
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $class
+     *
+     * @throws \ReflectionException
+     */
+    public function isInstanceOf(mixed $var, string $class): bool
     {
         if ($var === null) {
+            return false;
+        }
+
+        if (!\is_object($var)) {
             return false;
         }
 

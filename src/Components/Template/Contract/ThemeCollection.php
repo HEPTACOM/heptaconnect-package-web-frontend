@@ -29,7 +29,10 @@ final class ThemeCollection extends AbstractObjectCollection
 
     public function getNames(): StringCollection
     {
-        return new StringCollection($this->map(static fn (ThemeInterface $theme): string => $theme->getThemeName()));
+        return new StringCollection(\array_map(
+            static fn (ThemeInterface $theme): string => $theme->getThemeName(),
+            $this->asArray()
+        ));
     }
 
     public function getTemplatePath(string $themeName): ?string

@@ -9,6 +9,56 @@
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info" />
         <ImplicitToStringCast errorLevel="info" />
+
+        <MixedAssignment>
+            <errorLevel type="info">
+                <file name="../src/Components/Template/Hierarchy/IncludeTokenParser.php"/>
+                <file name="../src/Components/Template/Hierarchy/ReturnNodeTokenParser.php"/>
+            </errorLevel>
+        </MixedAssignment>
+
+        <UnusedFunctionCall>
+            <errorLevel type="info">
+                <file name="../src/Components/Template/Feature/Cache/TwigCache.php"/>
+            </errorLevel>
+        </UnusedFunctionCall>
+
+        <InvalidArgument>
+            <errorLevel type="info">
+                <!-- trigger notice should be ok like this -->
+                <file name="../src/Components/Template/Feature/Cache/TwigCache.php"/>
+            </errorLevel>
+        </InvalidArgument>
+
+        <PropertyNotSetInConstructor>
+            <errorLevel type="info">
+                <!-- $parser will be set by twig environment -->
+                <file name="../src/Components/Template/Hierarchy/ExtendsTokenParser.php"/>
+                <file name="../src/Components/Template/Hierarchy/IncludeTokenParser.php"/>
+                <file name="../src/Components/Template/Hierarchy/ReturnNodeTokenParser.php"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+
+        <InternalMethod>
+            <errorLevel type="info">
+                <!-- we build twig internals so it is ok to use twig internal methods -->
+                <file name="../src/Components/Template/Hierarchy/ExtendsTokenParser.php"/>
+            </errorLevel>
+        </InternalMethod>
+
+        <PossiblyInvalidArgument>
+            <errorLevel type="info">
+                <!-- type hint will be fixed in a later release of dataset-base -->
+                <file name="../src/Components/Template/Contract/ThemeCollection.php"/>
+            </errorLevel>
+        </PossiblyInvalidArgument>
+
+        <MixedPropertyTypeCoercion>
+            <errorLevel type="info">
+                <!-- will be fixed in a later release of bentools -->
+                <file name="../src/Components/Template/TwigEnvironmentFactory.php"/>
+            </errorLevel>
+        </MixedPropertyTypeCoercion>
     </issueHandlers>
 
     <plugins>

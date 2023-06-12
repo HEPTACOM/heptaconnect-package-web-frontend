@@ -19,6 +19,11 @@ final class AssetMiddleware implements MiddlewareInterface
      */
     private array $staticFilesPaths = [];
 
+    /**
+     * @var resource|null
+     */
+    private $mimeTypeInfo = null;
+
     private string $assetUrlPath;
 
     public function __construct(
@@ -41,7 +46,13 @@ final class AssetMiddleware implements MiddlewareInterface
 
     public function getFileHash(string $filePath): ?string
     {
-        $result = \md5_file($this->getRealFilePath(\ltrim($filePath, '/')));
+        $realFilePath = $this->getRealFilePath(\ltrim($filePath, '/'));
+
+        if ($realFilePath === null) {
+            return null;
+        }
+
+        $result = \md5_file($realFilePath);
 
         return $result === false ? null : $result;
     }
@@ -80,12 +91,7 @@ final class AssetMiddleware implements MiddlewareInterface
 
         $stream = $this->streamFactory->createStreamFromFile($realFilePath);
 
-        if (\extension_loaded('fileinfo')) {
-            $contentType = \finfo_buffer(\finfo_open(\FILEINFO_MIME_TYPE), (string) $stream);
-            $response = $response->withHeader('Content-Type', $contentType);
-        }
-
-        return $response->withStatus(200)->withBody($stream);
+        return $this->tryAddContentType($response->withBody($stream))->withStatus(200);
     }
 
     private function getEtag(string $relativeFilePath): ?string
@@ -113,5 +119,32 @@ final class AssetMiddleware implements MiddlewareInterface
         }
 
         return null;
+    }
+
+    private function tryAddContentType(ResponseInterface $response): ResponseInterface
+    {
+        if (!\extension_loaded('fileinfo')) {
+            return $response;
+        }
+
+        $mimeTypeInfo = $this->mimeTypeInfo;
+
+        if ($mimeTypeInfo === null) {
+            $freshMimeTypeInfo = \finfo_open(\FILEINFO_MIME_TYPE);
+
+            if ($freshMimeTypeInfo === false) {
+                return $response;
+            }
+
+            $mimeTypeInfo = $freshMimeTypeInfo;
+        }
+
+        $contentType = \finfo_buffer($mimeTypeInfo, (string) $response->getBody());
+
+        if ($contentType === false) {
+            return $response;
+        }
+
+        return $response->withHeader('Content-Type', $contentType);
     }
 }

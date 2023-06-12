@@ -22,7 +22,7 @@ final class ExtendsTokenParser extends AbstractTokenParser
 
         $source = $stream->getSourceContext()->getName();
 
-        $template = $stream->next()->getValue();
+        $template = (string) $stream->next()->getValue();
 
         // resolves parent template
         // set pointer to next value (contains the template file name)

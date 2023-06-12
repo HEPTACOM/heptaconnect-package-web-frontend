@@ -31,8 +31,13 @@ final class CacheClearCommand extends StatusReporterContract
     private function delete(string $path): void
     {
         $path = \rtrim($path, \DIRECTORY_SEPARATOR);
+        $scannedDirectory = \scandir($path);
 
-        foreach (scandir($path) as $node) {
+        if ($scannedDirectory === false) {
+            return;
+        }
+
+        foreach ($scannedDirectory as $node) {
             if (\in_array($node, ['.', '..'], true)) {
                 continue;
             }

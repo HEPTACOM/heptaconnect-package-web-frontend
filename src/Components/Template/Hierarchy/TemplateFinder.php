@@ -20,24 +20,18 @@ final class TemplateFinder
         $this->namespaceHierarchy = $this->themes->getRenderOrder()->getNames();
     }
 
-    public function getTemplateName(string $template): string
-    {
-        // remove static template inheritance prefix
-        if (mb_strpos($template, '@') !== 0) {
-            return $template;
-        }
-
-        $template = explode('/', $template, 2);
-
-        return $template[1] ?? $template[0];
-    }
-
-    public function find(string $template, $ignoreMissing = false, ?string $source = null): string
+    public function find(string $template, bool $ignoreMissing = false, ?string $source = null): string
     {
         $templatePath = $this->getTemplateName($template);
-        $sourcePath = $source ? $this->getTemplateName($source) : null;
-        $sourceBundleName = $source ? $this->getSourceBundleName($source) : null;
-        $originalTemplate = $source ? null : $template;
+        $sourcePath = null;
+        $sourceBundleName = null;
+        $originalTemplate = $template;
+
+        if ($source !== null) {
+            $sourcePath = $this->getTemplateName($source);
+            $sourceBundleName = $this->getSourceBundleName($source);
+            $originalTemplate = null;
+        }
 
         $queue = $this->namespaceHierarchy->asArray();
         $modifiedQueue = $queue;
@@ -72,7 +66,7 @@ final class TemplateFinder
 
         // Throw a useful error when the template cannot be found
         if ($originalTemplate === null) {
-            if ($ignoreMissing === true) {
+            if ($ignoreMissing) {
                 return $templatePath;
             }
 
@@ -84,11 +78,23 @@ final class TemplateFinder
             return $originalTemplate;
         }
 
-        if ($ignoreMissing === true) {
+        if ($ignoreMissing) {
             return $templatePath;
         }
 
         throw new LoaderError(\sprintf('Unable to load template "%s". (Looked into: %s)', $templatePath, implode(', ', array_values($modifiedQueue))));
+    }
+
+    private function getTemplateName(string $template): string
+    {
+        // remove static template inheritance prefix
+        if (mb_strpos($template, '@') !== 0) {
+            return $template;
+        }
+
+        $template = explode('/', $template, 2);
+
+        return $template[1] ?? $template[0];
     }
 
     private function getSourceBundleName(string $source): ?string

@@ -12,12 +12,7 @@ final class IsNumericExtension extends AbstractExtension
     public function getTests(): array
     {
         return [
-            new TwigTest('numeric', [$this, 'isNumeric']),
+            new TwigTest('numeric', 'is_numeric'),
         ];
-    }
-
-    public function isNumeric($var): bool
-    {
-        return \is_numeric((string) $var);
     }
 }

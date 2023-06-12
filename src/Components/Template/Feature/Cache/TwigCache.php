@@ -30,7 +30,7 @@ final class TwigCache extends FilesystemCache
         }
 
         $tmpFile = $this->tempnam($dir, \basename($key));
-        if (@\file_put_contents($tmpFile, $content) !== false && @\rename($tmpFile, $key)) {
+        if ($tmpFile !== null && @\file_put_contents($tmpFile, $content) !== false && @\rename($tmpFile, $key)) {
             @\chmod($key, 0666 & ~\umask());
 
             if (self::FORCE_BYTECODE_INVALIDATION === ($this->options & self::FORCE_BYTECODE_INVALIDATION)) {
@@ -48,7 +48,7 @@ final class TwigCache extends FilesystemCache
         throw new \RuntimeException(\sprintf('Failed to write cache file "%s".', $key));
     }
 
-    private function tempnam(string $directory, string $prefix): string|false
+    private function tempnam(string $directory, string $prefix): ?string
     {
         if ($directory === '') {
             $directory = \sys_get_temp_dir();
@@ -75,6 +75,6 @@ final class TwigCache extends FilesystemCache
             }
         } while (++$i < 10);
 
-        return false;
+        return null;
     }
 }
