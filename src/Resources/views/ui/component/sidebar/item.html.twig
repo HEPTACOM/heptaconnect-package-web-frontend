@@ -17,7 +17,9 @@
                {% if sidebarItemTitle is defined %}title="{{ sidebarItemTitle }}"{% endif %}
                class="nav-link text-nowrap d-flex gap-2{% if isActive %} active{% endif %}">
                 {% block sidebar_item_inner %}
-                    {% if sidebarItemIcon is defined %}
+                    {% if sidebarItemEmoji is defined %}
+                        <i style="font-style: normal">{{ sidebarItemEmoji }}</i>
+                    {% elseif sidebarItemIcon is defined %}
                         <i class="bi bi-{{ sidebarItemIcon }}"></i>
                     {% endif %}
 
