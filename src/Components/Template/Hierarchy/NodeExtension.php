@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\Contract\TemplateFinderInterface;
 use Twig\Extension\AbstractExtension;
 
 final class NodeExtension extends AbstractExtension
 {
-    private TemplateFinder $finder;
-
-    public function __construct(TemplateFinder $finder)
-    {
-        $this->finder = $finder;
+    public function __construct(
+        private TemplateFinderInterface $finder,
+    ) {
     }
 
     public function getTokenParsers(): array
@@ -24,7 +23,7 @@ final class NodeExtension extends AbstractExtension
         ];
     }
 
-    public function getFinder(): TemplateFinder
+    public function getFinder(): TemplateFinderInterface
     {
         return $this->finder;
     }

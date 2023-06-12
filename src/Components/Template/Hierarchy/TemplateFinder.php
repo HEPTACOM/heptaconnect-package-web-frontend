@@ -6,10 +6,11 @@ namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarch
 
 use Heptacom\HeptaConnect\Dataset\Base\ScalarCollection\StringCollection;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeCollection;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\Contract\TemplateFinderInterface;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 
-final class TemplateFinder
+final class TemplateFinder implements TemplateFinderInterface
 {
     private StringCollection $namespaceHierarchy;
 

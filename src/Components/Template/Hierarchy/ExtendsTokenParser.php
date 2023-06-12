@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\Contract\TemplateFinderInterface;
 use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
@@ -11,7 +12,7 @@ use Twig\TokenParser\AbstractTokenParser;
 final class ExtendsTokenParser extends AbstractTokenParser
 {
     public function __construct(
-        private TemplateFinder $finder,
+        private TemplateFinderInterface $finder,
     ) {
     }
 
