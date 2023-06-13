@@ -137,6 +137,7 @@ final class AssetMiddleware implements MiddlewareInterface
             }
 
             $mimeTypeInfo = $freshMimeTypeInfo;
+            $this->mimeTypeInfo = $mimeTypeInfo;
         }
 
         $contentType = \finfo_buffer($mimeTypeInfo, (string) $response->getBody());
