@@ -16,16 +16,22 @@
         </defaults>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CachedTwigEnvironmentFactory"
-            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CachePath"
         >
-            <argument key="$cacheDir">%web_frontend.template.cache_dir%</argument>
+            <argument>%web_frontend.template.cache_dir%</argument>
+            <argument
+                type="service"
+                id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"
+            />
         </service>
 
         <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CachedTwigEnvironmentFactory"
+            decorates="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface"
+        />
+
+        <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Cache\CacheClearCommand"
-        >
-            <argument key="$cacheDir">%web_frontend.template.cache_dir%</argument>
-        </service>
+        />
     </services>
 </container>

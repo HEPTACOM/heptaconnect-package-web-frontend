@@ -12,7 +12,7 @@ final class TwigCache extends FilesystemCache
         string $directory,
         private int $options = 0,
     ) {
-        parent::__construct($directory, $options);
+        parent::__construct($directory, $this->options);
     }
 
     public function write(string $key, string $content): void

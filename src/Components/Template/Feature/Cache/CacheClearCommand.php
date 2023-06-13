@@ -12,7 +12,7 @@ final class CacheClearCommand extends StatusReporterContract
 {
     public function __construct(
         private FilesystemInterface $filesystem,
-        private string $cacheDir,
+        private CachePath $cachePath,
     ) {
     }
 
@@ -23,7 +23,11 @@ final class CacheClearCommand extends StatusReporterContract
 
     protected function run(StatusReportingContextInterface $context): array
     {
-        $this->delete($this->filesystem->toStoragePath($this->cacheDir));
+        $currentCache = $this->cachePath->getCurrentCachePath();
+
+        $this->cachePath->resetTag();
+
+        $this->delete($this->filesystem->toStoragePath($currentCache));
 
         return [$this->supportsTopic() => true];
     }

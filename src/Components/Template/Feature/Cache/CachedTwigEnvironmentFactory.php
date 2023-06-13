@@ -13,7 +13,7 @@ final class CachedTwigEnvironmentFactory implements TwigEnvironmentFactoryInterf
     public function __construct(
         private TwigEnvironmentFactoryInterface $decorated,
         private FilesystemInterface $filesystem,
-        private string $cacheDir,
+        private CachePath $cachePath,
     ) {
     }
 
@@ -21,7 +21,7 @@ final class CachedTwigEnvironmentFactory implements TwigEnvironmentFactoryInterf
     {
         $result = $this->decorated->createTwigEnvironment();
 
-        $result->setCache(new TwigCache($this->filesystem->toStoragePath($this->cacheDir)));
+        $result->setCache(new TwigCache($this->filesystem->toStoragePath($this->cachePath->getCurrentCachePath())));
 
         return $result;
     }
