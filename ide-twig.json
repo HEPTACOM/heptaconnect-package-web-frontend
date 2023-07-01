@@ -1,7 +1,7 @@
 {
     "namespaces": [
         {
-            "path": "src/Resources/views",
+            "path": "src/Components/BootstrapTheme/Resources/views",
             "namespace": "WebFrontendPackage"
         }
     ]

@@ -17,6 +17,7 @@
             <exclude>../../Components/Session/Session.php</exclude>
             <exclude>../../Components/Session/SessionStorage.php</exclude>
             <exclude>../../Components/Template</exclude>
+            <exclude>../../Components/BootstrapTheme</exclude>
         </prototype>
 
         <service

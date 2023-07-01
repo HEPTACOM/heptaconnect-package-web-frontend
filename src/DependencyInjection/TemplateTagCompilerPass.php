@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\BootstrapTheme\BootstrapTheme;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeInterface;
-use Heptacom\HeptaConnect\Package\WebFrontend\WebFrontendPackage;
 use Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalContract;
 use Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalExtensionContract;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -42,7 +42,7 @@ final class TemplateTagCompilerPass implements CompilerPassInterface
             return -1000;
         }
 
-        if ($class === WebFrontendPackage::class) {
+        if ($class === BootstrapTheme::class) {
             return 1000;
         }
 
