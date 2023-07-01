@@ -25,7 +25,7 @@
 
         <style type="text/css">
             {% block css %}
-                {% sw_include '@WebFrontendPackage/ui/_base/css/sidebar.css' %}
+                {% include '@WebFrontendPackage/ui/_base/css/sidebar.css' %}
             {% endblock %}
         </style>
     {% endblock %}
@@ -34,7 +34,7 @@
 <body class="container-fluid d-flex flex-column vh-100" data-bs-theme="{{ colorScheme }}">
 
 {% block notifications %}
-    {% sw_include '@WebFrontendPackage/ui/_base/component/notifications.html.twig' %}
+    {% include '@WebFrontendPackage/ui/_base/component/notifications.html.twig' %}
 {% endblock %}
 
 {% block top_bar %}
@@ -66,7 +66,7 @@
     {% block layout %}
         <aside class="sidebar d-flex flex-column p-2 h-100 overflow-x-hidden overflow-y-auto border-end{% if sidebarCollapsed %} sidebar-collapsed{% endif %}">
             {% block sidebar %}
-                {% sw_include '@WebFrontendPackage/ui/_base/component/sidebar.html.twig' %}
+                {% include '@WebFrontendPackage/ui/_base/component/sidebar.html.twig' %}
             {% endblock %}
         </aside>
 
@@ -104,9 +104,9 @@
 {% block footer_scripts %}
     <script type="application/javascript" nonce="{{ nonce }}">
         {% block javascript %}
-            {% sw_include '@WebFrontendPackage/ui/_base/js/notifications.js' %}
-            {% sw_include '@WebFrontendPackage/ui/_base/js/appearance.js' %}
-            {% sw_include '@WebFrontendPackage/ui/_base/js/sidebar.js' %}
+            {% include '@WebFrontendPackage/ui/_base/js/notifications.js' %}
+            {% include '@WebFrontendPackage/ui/_base/js/appearance.js' %}
+            {% include '@WebFrontendPackage/ui/_base/js/sidebar.js' %}
         {% endblock %}
     </script>
 {% endblock %}

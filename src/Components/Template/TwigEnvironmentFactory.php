@@ -9,8 +9,10 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigE
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\ExtendsTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\IncludeTokenParser;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\TemplateFinder;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarchy\TokenParserDecorator;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\HttpHandlerUrlProviderInterface;
 use Twig\Environment;
+use Twig\Extension\CoreExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\Extra\String\StringExtension;
 use Twig\Loader\ChainLoader;
@@ -69,6 +71,19 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
         }
 
         $templateFinder = new TemplateFinder($environment->getLoader(), $this->themes);
+
+        foreach ($environment->getExtension(CoreExtension::class)->getTokenParsers() as $parser) {
+            if ($parser::class === \Twig\TokenParser\ExtendsTokenParser::class) {
+                $environment->addTokenParser(
+                    new TokenParserDecorator($parser, 'hc_internal_extends')
+                );
+            } elseif ($parser::class === \Twig\TokenParser\IncludeTokenParser::class) {
+                $environment->addTokenParser(
+                    new TokenParserDecorator($parser, 'hc_internal_include')
+                );
+            }
+        }
+
         $environment->addTokenParser(new ExtendsTokenParser($templateFinder));
         $environment->addTokenParser(new IncludeTokenParser($templateFinder));
 

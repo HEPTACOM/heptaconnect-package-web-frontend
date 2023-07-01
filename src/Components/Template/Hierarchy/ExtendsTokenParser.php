@@ -34,7 +34,7 @@ final class ExtendsTokenParser extends AbstractTokenParser
 
         $stream->injectTokens([
             new Token(Token::BLOCK_START_TYPE, '', 2),
-            new Token(Token::NAME_TYPE, 'extends', 2),
+            new Token(Token::NAME_TYPE, 'hc_internal_extends', 2),
             new Token(Token::STRING_TYPE, $parent, 2),
             new Token(Token::BLOCK_END_TYPE, '', 2),
         ]);
@@ -44,6 +44,6 @@ final class ExtendsTokenParser extends AbstractTokenParser
 
     public function getTag(): string
     {
-        return 'sw_extends';
+        return 'extends';
     }
 }

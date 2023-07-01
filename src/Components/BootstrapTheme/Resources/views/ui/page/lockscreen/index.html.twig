@@ -1,8 +1,8 @@
-{% sw_extends '@WebFrontendPackage/ui/_base/layout.html.twig' %}
+{% extends '@WebFrontendPackage/ui/_base/layout.html.twig' %}
 {# @var page \Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\LockscreenPage #}
 
 {% block css %}
-    {% sw_include '@WebFrontendPackage/ui/page/lockscreen/css/lockscreen.css' %}
+    {% include '@WebFrontendPackage/ui/page/lockscreen/css/lockscreen.css' %}
 {% endblock %}
 
 {% block layout %}

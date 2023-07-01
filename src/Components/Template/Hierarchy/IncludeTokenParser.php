@@ -44,7 +44,7 @@ final class IncludeTokenParser extends AbstractTokenParser
 
     public function getTag(): string
     {
-        return 'sw_include';
+        return 'include';
     }
 
     /**

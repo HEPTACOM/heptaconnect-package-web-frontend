@@ -3,7 +3,7 @@
         {% block sidebar_scrollable_content %}
             <ul class="nav nav-pills flex-column">
                 {% block sidebar_content_items %}
-                    {% sw_include '@WebFrontendPackage/ui/component/sidebar/item.html.twig' with {
+                    {% include '@WebFrontendPackage/ui/component/sidebar/item.html.twig' with {
                         sidebarItemTargetPage: 'ui',
                         sidebarItemTitle: 'Default page',
                         sidebarItemIcon: 'house-door'
