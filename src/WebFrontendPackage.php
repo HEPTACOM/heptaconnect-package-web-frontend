@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\ThemeInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\BootstrapThemeFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\CacheFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\DebugFeature;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Utility\ThemePackageTrait;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\ControllerPreparationCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\RegisterSuggestedTwigExtensionsCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\RemovePagesCompilerPass;
@@ -16,10 +15,8 @@ use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\TwigExtensionT
 use Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PackageContract;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-final class WebFrontendPackage extends PackageContract implements ThemeInterface
+final class WebFrontendPackage extends PackageContract
 {
-    use ThemePackageTrait;
-
     public function buildContainer(ContainerBuilder $containerBuilder): void
     {
         parent::buildContainer($containerBuilder);
@@ -31,5 +28,6 @@ final class WebFrontendPackage extends PackageContract implements ThemeInterface
 
         $containerBuilder->registerExtension(new CacheFeature());
         $containerBuilder->registerExtension(new DebugFeature());
+        $containerBuilder->registerExtension(new BootstrapThemeFeature());
     }
 }

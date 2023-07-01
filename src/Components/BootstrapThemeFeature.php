@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class DebugFeature extends Extension implements PrependExtensionInterface
+final class BootstrapThemeFeature extends Extension implements PrependExtensionInterface
 {
     public static function getName(): string
     {
@@ -28,8 +28,7 @@ final class DebugFeature extends Extension implements PrependExtensionInterface
     public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig($this->getAlias(), [
-            'enabled' => false,
-            'html_error_renderer' => null, // true | false
+            'enabled' => true,
         ]);
     }
 
@@ -37,16 +36,14 @@ final class DebugFeature extends Extension implements PrependExtensionInterface
     {
         $config = \array_replace_recursive([], ...$configs);
         $enabled = $this->isConfigEnabled($container, $config);
-        $htmlRenderer = $config['html_error_renderer'] ?? true;
 
         $container->setParameter($this->getAlias() . '.enabled', $enabled);
-        $container->setParameter($this->getAlias() . '.html_error_renderer', (bool) ($enabled && $htmlRenderer));
 
         if (!$enabled) {
             return;
         }
 
-        $containerConfigurationPath = __DIR__ . '/Debug/Resources/config';
+        $containerConfigurationPath = __DIR__ . '/BootstrapTheme/Resources/config';
         $xmlLoader = new XmlFileLoader($container, new FileLocator($containerConfigurationPath));
 
         $xmlLoader->load($containerConfigurationPath . '/services.xml');
