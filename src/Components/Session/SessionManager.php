@@ -33,7 +33,7 @@ final class SessionManager implements SessionManagerInterface
             return false;
         }
 
-        return SessionStorage::exists($sessionId, $this->sessionCache);
+        return Session::exists($sessionId, $this->sessionCache);
     }
 
     public function getSession(ServerRequestInterface $request): ?SessionInterface
@@ -42,7 +42,7 @@ final class SessionManager implements SessionManagerInterface
 
         if (
             $sessionId === null
-            || !SessionStorage::exists($sessionId, $this->sessionCache)
+            || !Session::exists($sessionId, $this->sessionCache)
         ) {
             return null;
         }
@@ -56,7 +56,7 @@ final class SessionManager implements SessionManagerInterface
 
         if (
             $sessionId !== null
-            && SessionStorage::exists($sessionId, $this->sessionCache)
+            && Session::exists($sessionId, $this->sessionCache)
         ) {
             throw new \Exception('Session is already started');
         }
@@ -72,17 +72,17 @@ final class SessionManager implements SessionManagerInterface
 
         if (
             $sessionId === null
-            || !SessionStorage::exists($sessionId, $this->sessionCache)
+            || !Session::exists($sessionId, $this->sessionCache)
         ) {
             return;
         }
 
-        $this->createSessionFromId($sessionId)->getStorage()->clear();
+        $this->createSessionFromId($sessionId)->clear();
     }
 
     public function restoreSession(string $sessionId): ?SessionInterface
     {
-        if (!SessionStorage::exists($sessionId, $this->sessionCache)) {
+        if (!Session::exists($sessionId, $this->sessionCache)) {
             return null;
         }
 
@@ -106,7 +106,7 @@ final class SessionManager implements SessionManagerInterface
             $this->urlProvider->resolve('')->getPath()
         );
 
-        $session->getStorage()->touch();
+        $session->touch();
 
         return $response
             ->withHeader('Set-Cookie', $setCookieHeader)
@@ -115,14 +115,10 @@ final class SessionManager implements SessionManagerInterface
 
     private function createSessionFromId(string $sessionId): Session
     {
-        $sessionStorage = new SessionStorage(
-            $sessionId,
-            $this->sessionCache,
-        );
+        $result = new Session($sessionId, $this->sessionCache);
+        $result->touch();
 
-        $sessionStorage->touch();
-
-        return new Session($sessionId, $sessionStorage);
+        return $result;
     }
 
     private function getSessionIdFromRequest(ServerRequestInterface $request): ?string

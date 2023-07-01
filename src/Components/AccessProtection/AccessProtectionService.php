@@ -206,7 +206,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
 
         $session = $this->sessionManager->getSession($request);
 
-        return $session->getStorage()->has(self::SESSION_KEY_AUTHORIZED);
+        return $session->has(self::SESSION_KEY_AUTHORIZED);
     }
 
     private function withAuthorizedSession(
@@ -246,7 +246,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
             $session = $this->sessionManager->createSession($request);
         }
 
-        $session->getStorage()->set(self::SESSION_KEY_AUTHORIZED, true);
+        $session->set(self::SESSION_KEY_AUTHORIZED, true);
 
         return $session;
     }
