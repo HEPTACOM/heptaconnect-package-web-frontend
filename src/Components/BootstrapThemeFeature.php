@@ -15,7 +15,7 @@ final class BootstrapThemeFeature extends Extension implements PrependExtensionI
 {
     public static function getName(): string
     {
-        $classBaseName = substr(strrchr(self::class, '\\'), 1, -9);
+        $classBaseName = substr(strrchr(self::class, '\\'), 1, -7);
 
         return Container::underscore('WebFrontendTemplate' . $classBaseName);
     }
