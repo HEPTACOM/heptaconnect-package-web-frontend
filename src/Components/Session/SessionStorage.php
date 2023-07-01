@@ -13,7 +13,6 @@ final class SessionStorage
     public function __construct(
         private string $sessionId,
         private CacheInterface $sessionCache,
-        private \DateInterval $sessionLifetime
     ) {
     }
 
@@ -85,7 +84,6 @@ final class SessionStorage
         return $this->sessionCache->set(
             self::getInternalKey($this->sessionId),
             $storage,
-            $this->sessionLifetime
         );
     }
 }

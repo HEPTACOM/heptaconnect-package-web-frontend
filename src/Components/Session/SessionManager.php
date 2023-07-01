@@ -118,7 +118,6 @@ final class SessionManager implements SessionManagerInterface
         $sessionStorage = new SessionStorage(
             $sessionId,
             $this->sessionCache,
-            new \DateInterval(self::SESSION_LIFETIME)
         );
 
         $sessionStorage->touch();
