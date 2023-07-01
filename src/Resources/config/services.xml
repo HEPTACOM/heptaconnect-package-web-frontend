@@ -27,6 +27,20 @@
         </service>
 
         <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManagerInterface"
+            class="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager"
+        >
+            <argument
+                type="service"
+                id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"
+            />
+        </service>
+        <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager"
+            alias="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManagerInterface"
+        />
+
+        <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\View\AssetHandler"
             autowire="true"
         >
