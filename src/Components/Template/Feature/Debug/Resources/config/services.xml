@@ -11,6 +11,12 @@
         >
             <bind key="$decorated" type="service" id=".inner"/>
         </defaults>
+        <instanceof id="Heptacom\HeptaConnect\Portal\Base\StatusReporting\Contract\StatusReporterContract">
+            <tag
+                name="heptaconnect.flow_component.status_reporter_source"
+                source="Heptacom\HeptaConnect\Package\WebFrontend\WebFrontendPackage"
+            />
+        </instanceof>
 
         <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\Debug\DebugTwigEnvironmentFactory"

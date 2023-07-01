@@ -18,7 +18,7 @@ final class CacheClearCommand extends StatusReporterContract
 
     public function supportsTopic(): string
     {
-        return 'web-frontend:template:cache-clear';
+        return 'web-frontend:template:cache:clear';
     }
 
     protected function run(StatusReportingContextInterface $context): array

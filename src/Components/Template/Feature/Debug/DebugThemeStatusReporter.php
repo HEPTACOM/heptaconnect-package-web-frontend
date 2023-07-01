@@ -17,7 +17,7 @@ final class DebugThemeStatusReporter extends StatusReporterContract
 
     public function supportsTopic(): string
     {
-        return 'web-frontend:template:debug-theme';
+        return 'web-frontend:template:debug:theme';
     }
 
     protected function run(StatusReportingContextInterface $context): array
