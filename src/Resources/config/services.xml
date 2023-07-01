@@ -34,7 +34,7 @@
         </service>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManagerInterface"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface"
             class="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager"
         >
             <argument
@@ -44,7 +44,7 @@
         </service>
         <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager"
-            alias="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManagerInterface"
+            alias="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface"
         />
 
         <service

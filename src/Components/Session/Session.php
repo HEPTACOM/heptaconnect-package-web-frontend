@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Session;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionInterface;
+
 final class Session implements SessionInterface
 {
     public function __construct(

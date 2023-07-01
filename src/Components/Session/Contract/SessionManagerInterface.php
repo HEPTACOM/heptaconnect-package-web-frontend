@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Session;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
