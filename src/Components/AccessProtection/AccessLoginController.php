@@ -10,27 +10,21 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\LockscreenUiHandle
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerContract;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\HttpHandlerUrlProviderInterface;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
+use Ramsey\Uuid\Uuid;
 
 final class AccessLoginController extends HttpHandlerContract
 {
     public const PATH = '_access/login';
 
-    private const JSON_FLAGS = \JSON_THROW_ON_ERROR | \JSON_PRESERVE_ZERO_FRACTION | \JSON_UNESCAPED_SLASHES;
-
     public function __construct(
         private UriFactoryInterface $uriFactory,
-        private RequestFactoryInterface $requestFactory,
-        private StreamFactoryInterface $streamFactory,
         private HttpHandlerUrlProviderInterface $urlProvider,
-        private ClientInterface $httpClient,
         private AccessProtectionServiceInterface $accessProtectionService,
-        private SessionManagerInterface $sessionManager
+        private SessionManagerInterface $sessionManager,
+        private AuthorizationBackendInterface $authorizationBackend
     ) {
     }
 
@@ -53,16 +47,25 @@ final class AccessLoginController extends HttpHandlerContract
         ResponseInterface $response,
         HttpHandleContextInterface $context
     ): ResponseInterface {
-        $authorizationHeader = $this->getAuthorizationHeader(
-            $request->getParsedBody()['username'] ?? null,
-            $request->getParsedBody()['password'] ?? null
-        );
 
-        if ($authorizationHeader === null) {
+        $username = $request->getParsedBody()['username'] ?? null;
+        $password = $request->getParsedBody()['password'] ?? null;
+
+        if (
+            !\is_string($username) ||
+            !\is_string($password) ||
+            !$this->authorizationBackend->verify($username, $password)
+        ) {
             return $this->getFailureResponse($request, $context);
         }
 
-        $profile = $this->getProfile($authorizationHeader);
+        $profile = [
+            'id' => (string) Uuid::uuid5('f383a25af328482493ddab3d71ceef59', $username)->getHex(),
+            'email' => $username . '@localhost',
+            'username' => $username,
+            'firstName' => '',
+            'lastName' => '',
+        ];
 
         $response = $this->getSuccessResponse($context);
 
@@ -71,69 +74,6 @@ final class AccessLoginController extends HttpHandlerContract
         $session->getStorage()->set('profile', $profile);
 
         return $response;
-    }
-
-    private function getAuthorizationHeader(?string $username, ?string $password): ?string
-    {
-        $tokenUri = $this->urlProvider->resolve('')->withPath('/api/oauth/token');
-
-        $authRequest = $this->requestFactory->createRequest('POST', $tokenUri)
-            ->withHeader('Accept', 'application/json')
-            ->withHeader('Content-Type', 'application/json')
-            ->withBody($this->streamFactory->createStream(\json_encode([
-                'client_id' => 'administration',
-                'grant_type' => 'password',
-                'scopes' => 'write',
-                'username' => $username,
-                'password' => $password,
-            ])));
-
-        $authResponse = $this->httpClient->sendRequest($authRequest);
-
-        if ($authResponse->getStatusCode() !== 200) {
-            return null;
-        }
-
-        $authResponseData = \json_decode(
-            (string) $authResponse->getBody(),
-            true,
-            512,
-            self::JSON_FLAGS
-        );
-
-        $tokenType = $authResponseData['token_type'];
-        $accessToken = $authResponseData['access_token'];
-
-        return $tokenType . ' ' . $accessToken;
-    }
-
-    private function getProfile(string $authorizationHeader): array
-    {
-        $profileUri = $this->urlProvider->resolve('')->withPath('/api/_info/me');
-
-        $profileRequest = $this->requestFactory->createRequest('GET', $profileUri)
-            ->withHeader('Accept', 'application/json')
-            ->withHeader('Authorization', $authorizationHeader);
-
-        $profileResponse = $this->httpClient->sendRequest($profileRequest);
-        $profileData = \json_decode(
-            (string) $profileResponse->getBody(),
-            true,
-            512,
-            self::JSON_FLAGS
-        );
-
-        $profile = $profileData['data'];
-
-        $profile = \array_intersect_key($profile, \array_flip([
-            'id',
-            'email',
-            'username',
-            'firstName',
-            'lastName',
-        ]));
-
-        return $profile;
     }
 
     private function getSuccessResponse(HttpHandleContextInterface $context): ResponseInterface
