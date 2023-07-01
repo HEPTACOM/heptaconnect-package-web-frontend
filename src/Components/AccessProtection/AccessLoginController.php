@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManagerInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\DefaultUiHandler;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\LockscreenUiHandler;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
