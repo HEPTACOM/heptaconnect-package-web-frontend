@@ -9,4 +9,9 @@ interface AuthorizationBackendInterface
     public function createUser(string $username, string $password): void;
 
     public function verify(string $username, string $password): bool;
+
+    /**
+     * @return iterable<string>
+     */
+    public function listUsers(): iterable;
 }

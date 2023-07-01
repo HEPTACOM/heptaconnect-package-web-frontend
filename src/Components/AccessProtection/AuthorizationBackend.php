@@ -44,6 +44,18 @@ final class AuthorizationBackend implements AuthorizationBackendInterface
         return \password_verify($password, $currentPassword);
     }
 
+    public function listUsers(): iterable
+    {
+        $resource = $this->getResource();
+
+        while (($line = \fgets($resource)) !== false) {
+            $line = \trim($line);
+            [$username] = \explode(':', $line, 2);
+
+            yield \base64_decode($username);
+        }
+    }
+
     /**
      * @return resource
      */
