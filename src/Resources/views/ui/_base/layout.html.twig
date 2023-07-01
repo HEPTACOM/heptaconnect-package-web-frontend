@@ -62,9 +62,9 @@
     </div>
 {% endblock %}
 
-<div class="flex-grow-1 flex-shrink-1 overflow-scroll row">
+<div class="flex-grow-1 flex-shrink-1 overflow-hidden row">
     {% block layout %}
-        <aside class="sidebar d-flex flex-column p-2 h-100 overflow-scroll border-end{% if sidebarCollapsed %} sidebar-collapsed{% endif %}">
+        <aside class="sidebar d-flex flex-column p-2 h-100 overflow-x-hidden overflow-y-auto border-end{% if sidebarCollapsed %} sidebar-collapsed{% endif %}">
             {% block sidebar %}
                 {% sw_include '@WebFrontendPackage/ui/_base/component/sidebar.html.twig' %}
             {% endblock %}
