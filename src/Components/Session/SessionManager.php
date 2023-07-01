@@ -19,6 +19,8 @@ final class SessionManager implements SessionManagerInterface
 
     private const SESSION_LIFETIME = 'P30D';
 
+    private const STORAGE_PREFIX = 'session.storage.';
+
     public function __construct(
         private CacheInterface $sessionCache,
         private HttpHandlerUrlProviderInterface $urlProvider
@@ -33,7 +35,7 @@ final class SessionManager implements SessionManagerInterface
             return false;
         }
 
-        return Session::exists($sessionId, $this->sessionCache);
+        return self::exists($sessionId, $this->sessionCache);
     }
 
     public function getSession(ServerRequestInterface $request): ?SessionInterface
@@ -42,7 +44,7 @@ final class SessionManager implements SessionManagerInterface
 
         if (
             $sessionId === null
-            || !Session::exists($sessionId, $this->sessionCache)
+            || !self::exists($sessionId, $this->sessionCache)
         ) {
             return null;
         }
@@ -56,7 +58,7 @@ final class SessionManager implements SessionManagerInterface
 
         if (
             $sessionId !== null
-            && Session::exists($sessionId, $this->sessionCache)
+            && self::exists($sessionId, $this->sessionCache)
         ) {
             throw new \Exception('Session is already started');
         }
@@ -72,7 +74,7 @@ final class SessionManager implements SessionManagerInterface
 
         if (
             $sessionId === null
-            || !Session::exists($sessionId, $this->sessionCache)
+            || !self::exists($sessionId, $this->sessionCache)
         ) {
             return;
         }
@@ -82,7 +84,7 @@ final class SessionManager implements SessionManagerInterface
 
     public function restoreSession(string $sessionId): ?SessionInterface
     {
-        if (!Session::exists($sessionId, $this->sessionCache)) {
+        if (!self::exists($sessionId, $this->sessionCache)) {
             return null;
         }
 
@@ -106,19 +108,33 @@ final class SessionManager implements SessionManagerInterface
             $this->urlProvider->resolve('')->getPath()
         );
 
-        $session->touch();
+        $this->setStorage($session->getId(), $session->all());
 
         return $response
             ->withHeader('Set-Cookie', $setCookieHeader)
             ->withHeader('X-Session-ID', $session->getId());
     }
 
+    private static function exists(string $sessionId, CacheInterface $portalStorage): bool
+    {
+        return $portalStorage->has(self::getInternalKey($sessionId));
+    }
+
+    private static function getInternalKey(string $sessionId): string
+    {
+        return self::STORAGE_PREFIX . $sessionId;
+    }
+
     private function createSessionFromId(string $sessionId): Session
     {
-        $result = new Session($sessionId, $this->sessionCache);
-        $result->touch();
+        $sessionValues = $this->getStorage($sessionId);
 
-        return $result;
+        if ($sessionValues === null) {
+            $sessionValues = [];
+            $this->setStorage($sessionId, $sessionValues);
+        }
+
+        return new Session($sessionId, $sessionValues);
     }
 
     private function getSessionIdFromRequest(ServerRequestInterface $request): ?string
@@ -144,5 +160,27 @@ final class SessionManager implements SessionManagerInterface
         $timestamp = (int) $reference->add($sessionLifetime)->format('U');
 
         return \gmdate('D, d-M-Y H:i:s T', $timestamp);
+    }
+
+    private function getStorage(string $sessionId): ?array
+    {
+        $storage = $this->sessionCache->get(
+            self::getInternalKey($sessionId)
+        );
+
+        if (\is_array($storage)) {
+            return $storage;
+        }
+
+        return null;
+    }
+
+    private function setStorage(string $sessionId, array $storage): bool
+    {
+        return $this->sessionCache->set(
+            self::getInternalKey($sessionId),
+            $storage,
+            new \DateInterval(self::SESSION_LIFETIME)
+        );
     }
 }
