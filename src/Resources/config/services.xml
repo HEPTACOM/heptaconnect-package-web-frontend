@@ -19,6 +19,12 @@
             <exclude>../../Components/Template</exclude>
             <exclude>../../Components/BootstrapTheme</exclude>
         </prototype>
+        <service
+            autowire="true"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\ErrorHandler\HttpErrorHandlerMiddleware"
+        >
+            <argument key="$debugFriendlyErrorReport">%web_frontend_template_debug.html_error_renderer%</argument>
+        </service>
 
         <service
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionService"

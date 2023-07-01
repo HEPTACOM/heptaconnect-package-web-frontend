@@ -29,6 +29,7 @@ final class DebugFeature extends Extension implements PrependExtensionInterface
     {
         $container->prependExtensionConfig($this->getAlias(), [
             'enabled' => false,
+            'html_error_renderer' => null, // true | false
         ]);
     }
 
@@ -36,8 +37,10 @@ final class DebugFeature extends Extension implements PrependExtensionInterface
     {
         $config = \array_replace_recursive([], ...$configs);
         $enabled = $this->isConfigEnabled($container, $config);
+        $htmlRenderer = $config['html_error_renderer'] ?? true;
 
         $container->setParameter($this->getAlias() . '.enabled', $enabled);
+        $container->setParameter($this->getAlias() . '.html_error_renderer', (bool) ($enabled && $htmlRenderer));
 
         if (!$enabled) {
             return;

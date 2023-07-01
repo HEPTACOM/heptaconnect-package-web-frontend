@@ -17,6 +17,7 @@ final class HttpErrorHandlerMiddleware implements MiddlewareInterface
     public function __construct(
         private ResponseFactoryInterface $responseFactory,
         private StreamFactoryInterface $streamFactory,
+        private bool $debugFriendlyErrorReport
     ) {
     }
 
@@ -25,8 +26,7 @@ final class HttpErrorHandlerMiddleware implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (\Throwable $exception) {
-            // TODO: add config option to toggle debug mode
-            $exception = (new HtmlErrorRenderer(true))->render($exception);
+            $exception = (new HtmlErrorRenderer($this->debugFriendlyErrorReport))->render($exception);
 
             $response = $this->responseFactory->createResponse($exception->getStatusCode());
             $response = $response->withBody($this->streamFactory->createStream($exception->getAsString()));
