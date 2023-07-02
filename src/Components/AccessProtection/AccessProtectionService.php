@@ -88,9 +88,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
         $session = $this->getAuthorizedSession($request);
         $request = $request->withAttribute(SessionManager::REQUEST_ATTRIBUTE_SESSION, $session);
 
-        $response = $this->handle($handler, $request);
-
-        return $this->sessionManager->alterResponse($session, $response);
+        return $this->handle($handler, $request);
     }
 
     public function generateLoginUrl(): string
