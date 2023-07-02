@@ -19,23 +19,22 @@ final class SessionMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $hasSession = $this->sessionManager->hasSession($request);
+        $session = $this->sessionManager->getSessionFromRequest($request);
 
-        if ($hasSession) {
-            $session = $this->sessionManager->getSession($request);
-
-            $request = $request->withAttribute(
-                SessionManager::REQUEST_ATTRIBUTE_SESSION,
-                $session
-            );
+        if ($session === null) {
+            return $handler->handle($request);
         }
 
-        $response = $handler->handle($request);
+        $request = $request->withAttribute(SessionManager::REQUEST_ATTRIBUTE_SESSION, $session);
 
-        if ($hasSession) {
-            $response = $this->sessionManager->addResponseHeader($session, $response);
+        try {
+            $response = $handler->handle($request);
+
+            return $this->sessionManager->alterResponse($session, $response);
+        } catch (\Throwable $throwable) {
+            $this->sessionManager->saveSession($session);
+
+            throw $throwable;
         }
-
-        return $response;
     }
 }
