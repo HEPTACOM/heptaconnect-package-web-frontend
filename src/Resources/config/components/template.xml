@@ -32,6 +32,10 @@
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\AssetMiddleware"
         >
             <argument key="$assetUrlPath">%web_frontend.template.asset_url_path%</argument>
+            <tag
+                name="heptaconnect.http.handler.middleware"
+                priority="-1000"
+            />
         </service>
     </services>
 </container>

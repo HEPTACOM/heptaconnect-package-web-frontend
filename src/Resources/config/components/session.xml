@@ -18,5 +18,12 @@
         <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager">
             <argument key="Psr\SimpleCache\CacheInterface" type="service" id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"/>
         </service>
+
+        <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionMiddleware">
+            <tag
+                name="heptaconnect.http.handler.middleware"
+                priority="-2000"
+            />
+        </service>
     </services>
 </container>

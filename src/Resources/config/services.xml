@@ -10,6 +10,8 @@
     </imports>
     <services>
         <prototype namespace="Heptacom\HeptaConnect\Package\WebFrontend\" resource="../../">
+            <exclude>../../Components/AccessProtection/AccessProtectionService.php</exclude>
+            <exclude>../../Components/AccessProtection/AccessProtectionServiceInterface.php</exclude>
             <exclude>../../Components/Notification/Notification.php</exclude>
             <exclude>../../Components/Session</exclude>
             <exclude>../../Components/Template</exclude>
@@ -20,13 +22,22 @@
             id="Heptacom\HeptaConnect\Package\WebFrontend\Components\ErrorHandler\HttpErrorHandlerMiddleware"
         >
             <argument key="$debugFriendlyErrorReport">%web_frontend_template_debug.html_error_renderer%</argument>
+            <tag
+                name="heptaconnect.http.handler.middleware"
+                priority="1000"
+            />
         </service>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionService"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionServiceInterface"
+            class="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionService"
             autowire="true"
         >
-            <argument type="tagged_iterator" tag="web_frontend.ui_handler"/>
+            <argument key="$uiHandlers" type="tagged_iterator" tag="web_frontend.ui_handler"/>
+            <tag
+                name="heptaconnect.http.handler.middleware"
+                priority="-3000"
+            />
         </service>
 
         <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag"/>
