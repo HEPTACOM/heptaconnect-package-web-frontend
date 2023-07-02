@@ -34,6 +34,12 @@ final class SessionManager implements SessionManagerInterface
 
     public function getSessionFromRequest(ServerRequestInterface $request): ?SessionInterface
     {
+        $session = $request->getAttribute(self::REQUEST_ATTRIBUTE_SESSION);
+
+        if ($session instanceof SessionInterface) {
+            return $session;
+        }
+
         $sessionId = $this->getSessionIdFromRequest($request);
 
         if (!$this->exists($sessionId)) {
