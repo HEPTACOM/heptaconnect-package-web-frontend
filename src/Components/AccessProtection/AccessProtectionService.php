@@ -90,7 +90,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
 
         $response = $this->handle($handler, $request);
 
-        return $this->sessionManager->addResponseHeader($session, $response);
+        return $this->sessionManager->alterResponse($session, $response);
     }
 
     public function generateLoginUrl(): string
@@ -204,7 +204,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
             return false;
         }
 
-        $session = $this->sessionManager->getSession($request);
+        $session = $this->sessionManager->getSessionFromRequest($request);
 
         return $session->has(self::SESSION_KEY_AUTHORIZED);
     }
@@ -215,7 +215,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
     ): ResponseInterface {
         $session = $this->getAuthorizedSession($request);
 
-        return $this->sessionManager->addResponseHeader($session, $response);
+        return $this->sessionManager->alterResponse($session, $response);
     }
 
     private function createUnauthorizedResponse(): ResponseInterface
@@ -241,7 +241,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
     private function getAuthorizedSession(ServerRequestInterface $request): ?SessionInterface
     {
         if ($this->sessionManager->hasSession($request)) {
-            $session = $this->sessionManager->getSession($request);
+            $session = $this->sessionManager->getSessionFromRequest($request);
         } else {
             $session = $this->sessionManager->createSession($request);
         }
