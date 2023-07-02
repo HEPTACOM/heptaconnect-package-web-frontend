@@ -79,7 +79,7 @@ final class SessionManager implements SessionManagerInterface
             return;
         }
 
-        $this->createSessionFromId($sessionId)->clear();
+        $this->sessionCache->delete(self::getInternalKey($sessionId));
     }
 
     public function restoreSession(string $sessionId): ?SessionInterface
