@@ -5,17 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <imports>
+        <import resource="components/session.xml"/>
         <import resource="components/template.xml"/>
     </imports>
     <services>
-        <defaults>
-            <bind key="Psr\SimpleCache\CacheInterface" type="service" id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"/>
-        </defaults>
-
         <prototype namespace="Heptacom\HeptaConnect\Package\WebFrontend\" resource="../../">
             <exclude>../../Components/Notification/Notification.php</exclude>
-            <exclude>../../Components/Session/Session.php</exclude>
-            <exclude>../../Components/Session/SessionStorage.php</exclude>
+            <exclude>../../Components/Session</exclude>
             <exclude>../../Components/Template</exclude>
             <exclude>../../Components/BootstrapTheme</exclude>
         </prototype>
@@ -31,27 +27,6 @@
             autowire="true"
         >
             <argument type="tagged_iterator" tag="web_frontend.ui_handler"/>
-        </service>
-
-        <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface"
-            class="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager"
-        >
-            <argument
-                type="service"
-                id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"
-            />
-        </service>
-        <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager"
-            alias="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface"
-        />
-
-        <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\View\AssetHandler"
-            autowire="true"
-        >
-            <argument type="tagged_iterator" tag="web_frontend.theme"/>
         </service>
 
         <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag"/>
