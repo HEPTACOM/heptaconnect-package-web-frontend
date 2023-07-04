@@ -17,7 +17,7 @@ final class BootstrapThemeFeature extends Extension implements PrependExtensionI
     {
         $classBaseName = substr(strrchr(self::class, '\\'), 1, -7);
 
-        return Container::underscore('WebFrontendTemplate' . $classBaseName);
+        return Container::underscore('WebFrontend' . $classBaseName);
     }
 
     public function getAlias()
