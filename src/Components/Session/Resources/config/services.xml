@@ -17,6 +17,9 @@
 
         <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager">
             <argument key="Psr\SimpleCache\CacheInterface" type="service" id="Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface"/>
+            <argument key="$sessionLifetime">%web_frontend_session.session_lifetime%</argument>
+            <argument key="$cookieName">%web_frontend_session.cookie_name%</argument>
+            <argument key="$cachePrefix">%web_frontend_session.cache_key_prefix%</argument>
         </service>
 
         <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionMiddleware">

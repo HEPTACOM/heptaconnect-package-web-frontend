@@ -29,6 +29,9 @@ final class SessionFeature extends Extension implements PrependExtensionInterfac
     {
         $container->prependExtensionConfig($this->getAlias(), [
             'enabled' => true,
+            'session_lifetime' => 'P30D',
+            'cookie_name' => 'HC_SESSION_ID',
+            'cache_key_prefix' => 'session.storage.',
         ]);
     }
 
@@ -42,6 +45,10 @@ final class SessionFeature extends Extension implements PrependExtensionInterfac
         if (!$enabled) {
             return;
         }
+
+        $container->setParameter($this->getAlias() . '.session_lifetime', $config['session_lifetime']);
+        $container->setParameter($this->getAlias() . '.cookie_name', $config['cookie_name']);
+        $container->setParameter($this->getAlias() . '.cache_key_prefix', $config['cache_key_prefix']);
 
         $containerConfigurationPath = __DIR__ . '/Session/Resources/config';
         $xmlLoader = new XmlFileLoader($container, new FileLocator($containerConfigurationPath));

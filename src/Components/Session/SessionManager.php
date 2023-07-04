@@ -15,16 +15,16 @@ final class SessionManager implements SessionManagerInterface
 {
     public const REQUEST_ATTRIBUTE_SESSION = 'session';
 
-    private const COOKIE_NAME_SESSION_ID = 'HC_SESSION_ID';
-
-    private const SESSION_LIFETIME = 'P30D';
-
-    private const STORAGE_PREFIX = 'session.storage.';
+    private \DateInterval $sessionLifetime;
 
     public function __construct(
         private CacheInterface $sessionCache,
-        private HttpHandlerUrlProviderInterface $urlProvider
+        private HttpHandlerUrlProviderInterface $urlProvider,
+        private string $cookieName,
+        private string $cachePrefix,
+        string $sessionLifetime
     ) {
+        $this->sessionLifetime = new \DateInterval($sessionLifetime);
     }
 
     public function hasSession(ServerRequestInterface $request): bool
@@ -70,7 +70,7 @@ final class SessionManager implements SessionManagerInterface
             return;
         }
 
-        $this->sessionCache->delete(self::getInternalKey($sessionId));
+        $this->sessionCache->delete($this->getInternalKey($sessionId));
     }
 
     public function getSessionFromId(string $sessionId): ?SessionInterface
@@ -85,12 +85,11 @@ final class SessionManager implements SessionManagerInterface
     public function alterResponse(SessionInterface $session, ResponseInterface $response): ResponseInterface
     {
         $referenceTime = new \DateTimeImmutable();
-        $sessionLifetime = new \DateInterval(self::SESSION_LIFETIME);
-        $maxAge = $this->getSessionMaxAge($referenceTime, $sessionLifetime);
-        $expiration = $this->getSessionExpiration($referenceTime, $sessionLifetime);
+        $maxAge = $this->getSessionMaxAge($referenceTime, $this->sessionLifetime);
+        $expiration = $this->getSessionExpiration($referenceTime, $this->sessionLifetime);
 
         $setCookieHeader = \sprintf(
-            self::COOKIE_NAME_SESSION_ID . '=%s; HttpOnly; Max-Age=%s; Expires=%s; Path=%s',
+            $this->cookieName . '=%s; HttpOnly; Max-Age=%s; Expires=%s; Path=%s',
             $session->getId(),
             $maxAge,
             $expiration,
@@ -109,9 +108,9 @@ final class SessionManager implements SessionManagerInterface
         $this->setStorage($session->getId(), $session->all());
     }
 
-    private static function getInternalKey(string $sessionId): string
+    private function getInternalKey(string $sessionId): string
     {
-        return self::STORAGE_PREFIX . $sessionId;
+        return $this->cachePrefix . $sessionId;
     }
 
     /**
@@ -123,12 +122,12 @@ final class SessionManager implements SessionManagerInterface
             return false;
         }
 
-        return $this->sessionCache->has(self::getInternalKey($sessionId));
+        return $this->sessionCache->has($this->getInternalKey($sessionId));
     }
 
     private function createSessionFromId(string $sessionId): Session
     {
-        $storage = $this->sessionCache->get(self::getInternalKey($sessionId));
+        $storage = $this->sessionCache->get($this->getInternalKey($sessionId));
         $sessionValues = null;
 
         if (\is_array($storage)) {
@@ -150,7 +149,7 @@ final class SessionManager implements SessionManagerInterface
         if ($session instanceof SessionInterface) {
             $sessionId = $session->getId();
         } else {
-            $sessionId = $request->getCookieParams()[self::COOKIE_NAME_SESSION_ID] ?? null;
+            $sessionId = $request->getCookieParams()[$this->cookieName] ?? null;
         }
 
         return $sessionId;
@@ -171,9 +170,9 @@ final class SessionManager implements SessionManagerInterface
     private function setStorage(string $sessionId, array $storage): bool
     {
         return $this->sessionCache->set(
-            self::getInternalKey($sessionId),
+            $this->getInternalKey($sessionId),
             $storage,
-            new \DateInterval(self::SESSION_LIFETIME)
+            $this->sessionLifetime
         );
     }
 }
