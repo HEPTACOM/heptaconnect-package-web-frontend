@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\UiHandlerContract;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\UiHandlerContract;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

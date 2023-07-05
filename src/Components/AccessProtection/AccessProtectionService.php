@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\UiHandlerContract;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\DefaultUiHandler;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\LockscreenUiHandler;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\DefaultUiHandler;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\LockscreenUiHandler;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\View\UiHandlerContract;
 use Heptacom\HeptaConnect\Portal\Base\Portal\Contract\PortalStorageInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpKernelInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\HttpHandlerUrlProviderInterface;

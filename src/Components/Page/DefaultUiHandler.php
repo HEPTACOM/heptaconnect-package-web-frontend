@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\View;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\DefaultPage;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\UiHandlerContract;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
