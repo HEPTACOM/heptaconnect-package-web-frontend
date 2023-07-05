@@ -17,6 +17,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class UiHandlerContract extends HttpHandlerContract
 {
+    private ServerRequestInterface $handlingRequest;
+
+    private HttpHandleContextInterface $handlingContext;
+
     private ?ContainerInterface $container = null;
 
     public function setContainer(ContainerInterface $container): void
@@ -30,6 +34,9 @@ abstract class UiHandlerContract extends HttpHandlerContract
         HttpHandleContextInterface $context,
         HttpHandlerStackInterface $stack
     ): ResponseInterface {
+        $this->handlingRequest = $request;
+        $this->handlingContext = $context;
+
         try {
             return parent::handle(
                 $request,
@@ -47,12 +54,12 @@ abstract class UiHandlerContract extends HttpHandlerContract
         return true;
     }
 
-    protected function render(AbstractPage $page, ?ServerRequestInterface $request = null): ResponseInterface
+    protected function render(AbstractPage $page): ResponseInterface
     {
         /** @var WebPageRendererInterface $pageRenderer */
         $pageRenderer = $this->container->get(WebPageRendererInterface::class);
 
-        return $pageRenderer->render($page, $request);
+        return $pageRenderer->render($page, $this->handlingRequest, $this->handlingContext);
     }
 
     protected function notify(string $type, string $message): void

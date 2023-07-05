@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageRendererInterface;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageTwigEnvironmentFactoryInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,10 +15,9 @@ use Psr\Http\Message\StreamFactoryInterface;
 final class WebPageRenderer implements WebPageRendererInterface
 {
     public function __construct(
-        private NotificationBag $notifications,
         private ResponseFactoryInterface $responseFactory,
         private StreamFactoryInterface $streamFactory,
-        private TwigEnvironmentFactoryInterface $twigEnvironmentFactory,
+        private WebPageTwigEnvironmentFactoryInterface $webPageTwigEnvironmentFactory
     ) {
     }
 
@@ -28,15 +26,11 @@ final class WebPageRenderer implements WebPageRendererInterface
         ServerRequestInterface $request,
         HttpHandleContextInterface $context
     ): ResponseInterface {
-        $twig = $this->twigEnvironmentFactory->createTwigEnvironment();
+        $twig = $this->webPageTwigEnvironmentFactory->createTwigEnvironment($request, $context);
 
         $nonce = \bin2hex(\random_bytes(16));
 
         $twig->addGlobal('nonce', $nonce);
-        $twig->addGlobal('notifications', $this->notifications);
-        $twig->addGlobal('currentPage', $this->getCurrentPage($request));
-        $twig->addGlobal('currentUri', $this->getCurrentUri($request));
-        $twig->addGlobal('colorScheme', $this->getColorScheme($request));
 
         $renderedBody = $twig->render($page->getTemplate(), ['page' => $page]);
 
@@ -51,36 +45,5 @@ final class WebPageRenderer implements WebPageRendererInterface
         ;
 
         return $response;
-    }
-
-    private function getColorScheme(?ServerRequestInterface $request): string
-    {
-        if ($request instanceof ServerRequestInterface) {
-            $preferredColorScheme = \strtolower($request->getHeaderLine('Sec-CH-Prefers-Color-Scheme'));
-
-            if (\in_array($preferredColorScheme, ['light', 'dark'], true)) {
-                return $preferredColorScheme;
-            }
-        }
-
-        return 'light';
-    }
-
-    private function getCurrentPage(?ServerRequestInterface $request): ?string
-    {
-        if ($request instanceof ServerRequestInterface) {
-            return $request->getUri()->getPath();
-        }
-
-        return null;
-    }
-
-    private function getCurrentUri(?ServerRequestInterface $request): ?string
-    {
-        if ($request instanceof ServerRequestInterface) {
-            return (string) $request->getUri();
-        }
-
-        return null;
     }
 }

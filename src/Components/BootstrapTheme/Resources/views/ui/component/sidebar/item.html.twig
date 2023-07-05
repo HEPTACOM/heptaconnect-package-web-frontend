@@ -1,11 +1,17 @@
+{# TODO remove this check #}
+{% if sidebarItemTargetPage is defined %}
+    <pre style="border: 3px solid red">replace sidebarItemTargetPage with sidebarItemTargetPath</pre>
+    {% set sidebarItemTargetPath = sidebarItemTargetPage %}
+{% endif %}
+
 {% if sidebarItemTarget is not defined %}
-    {% if sidebarItemTargetPage is defined %}
-        {% set sidebarItemTarget = path(sidebarItemTargetPage) %}
+    {% if sidebarItemTargetPath is defined %}
+        {% set sidebarItemTarget = path(sidebarItemTargetPath) %}
     {% endif %}
 {% endif %}
 
-{% if sidebarItemTargetPage is defined %}
-    {% set isActive = (sidebarItemTargetPage is same as(currentPage)) %}
+{% if sidebarItemTargetPath is defined %}
+    {% set isActive = (sidebarItemTargetPath is same as(currentPath)) %}
 {% else %}
     {% set isActive = false %}
 {% endif %}

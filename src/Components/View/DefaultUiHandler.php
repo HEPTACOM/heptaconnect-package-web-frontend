@@ -23,6 +23,6 @@ final class DefaultUiHandler extends UiHandlerContract
         ResponseInterface $response,
         HttpHandleContextInterface $context
     ): ResponseInterface {
-        return $this->render(new DefaultPage(), $request);
+        return $this->render(new DefaultPage());
     }
 }
