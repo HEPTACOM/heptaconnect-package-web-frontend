@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\PageRendererInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageRendererInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
+use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-final class PageRenderer implements PageRendererInterface
+final class WebPageRenderer implements WebPageRendererInterface
 {
     public function __construct(
         private NotificationBag $notifications,
@@ -22,8 +23,11 @@ final class PageRenderer implements PageRendererInterface
     ) {
     }
 
-    public function render(AbstractPage $page, ?ServerRequestInterface $request = null): ResponseInterface
-    {
+    public function render(
+        AbstractPage $page,
+        ServerRequestInterface $request,
+        HttpHandleContextInterface $context
+    ): ResponseInterface {
         $twig = $this->twigEnvironmentFactory->createTwigEnvironment();
 
         $nonce = \bin2hex(\random_bytes(16));
