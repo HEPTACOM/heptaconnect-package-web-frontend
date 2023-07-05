@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\PageRendererInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
