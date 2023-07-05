@@ -25,6 +25,18 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
     ): Environment {
         $twig = $this->twigEnvironmentFactory->createTwigEnvironment();
 
+        foreach ($request->getAttributes() as $attributeKey => $attribute) {
+            if (\str_starts_with($attributeKey, 'twig.') && \mb_strlen($attributeKey) > 5) {
+                $twigKey = \mb_substr($attributeKey, 5);
+                $twigKey = \preg_replace_callback(
+                    '/[^a-zA-Z0-9]+(.)/u',
+                    static fn (array $matches): string => \strtoupper($matches[1]),
+                    $twigKey
+                );
+                $twig->addGlobal($twigKey, $attribute);
+            }
+        }
+
         $twig->addGlobal('notifications', $this->notifications);
         $twig->addGlobal('currentPath', $this->getCurrentPath($request));
         $twig->addGlobal('currentUri', $this->getCurrentUri($request));
