@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\AbstractPage;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\AbstractPage;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

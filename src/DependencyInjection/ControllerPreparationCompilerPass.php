@@ -20,6 +20,9 @@ final class ControllerPreparationCompilerPass implements CompilerPassInterface
                 ]);
 
                 $definition->addTag('web_frontend.ui_handler');
+                $definition->addTag('heptaconnect.flow_component.web_http_handler_source', [
+                    'source' => \Heptacom\HeptaConnect\Package\WebFrontend\WebFrontendPackage::class
+                ]);
             }
         }
     }

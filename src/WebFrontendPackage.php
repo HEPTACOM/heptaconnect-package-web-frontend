@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Heptacom\HeptaConnect\Package\WebFrontend;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\BootstrapThemeFeature;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\PageFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\SessionFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\CacheFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\DebugFeature;
@@ -30,6 +31,7 @@ final class WebFrontendPackage extends PackageContract
         $containerBuilder->registerExtension(new CacheFeature());
         $containerBuilder->registerExtension(new DebugFeature());
         $containerBuilder->registerExtension(new SessionFeature());
+        $containerBuilder->registerExtension(new PageFeature());
         $containerBuilder->registerExtension(new BootstrapThemeFeature());
     }
 }

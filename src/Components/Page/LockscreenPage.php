@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\AbstractPage;
+
 final class LockscreenPage extends AbstractPage
 {
     public function __construct(

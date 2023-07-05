@@ -6,7 +6,6 @@ namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\Notification;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\AbstractPage;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerContract;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerStackInterface;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\AbstractPage;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageRendererInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageTwigEnvironmentFactoryInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;

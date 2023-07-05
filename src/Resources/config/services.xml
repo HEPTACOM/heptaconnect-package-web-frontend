@@ -12,6 +12,7 @@
             <exclude>../../Components/AccessProtection/AccessProtectionService.php</exclude>
             <exclude>../../Components/AccessProtection/AccessProtectionServiceInterface.php</exclude>
             <exclude>../../Components/Notification/Notification.php</exclude>
+            <exclude>../../Components/Page</exclude>
             <exclude>../../Components/Session</exclude>
             <exclude>../../Components/Template</exclude>
             <exclude>../../Components/BootstrapTheme</exclude>
