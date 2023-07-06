@@ -10,6 +10,7 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\SessionFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\CacheFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature\DebugFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\ControllerPreparationCompilerPass;
+use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\ProvideContainerParameterForTwigEnvironmentCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\RegisterSuggestedTwigExtensionsCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\RemovePagesCompilerPass;
 use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\TemplateTagCompilerPass;
@@ -27,6 +28,7 @@ final class WebFrontendPackage extends PackageContract
         $containerBuilder->addCompilerPass(new TwigExtensionTagCompilerPass());
         $containerBuilder->addCompilerPass(new RemovePagesCompilerPass());
         $containerBuilder->addCompilerPass(new RegisterSuggestedTwigExtensionsCompilerPass());
+        $containerBuilder->addCompilerPass(new ProvideContainerParameterForTwigEnvironmentCompilerPass());
 
         $containerBuilder->registerExtension(new CacheFeature());
         $containerBuilder->registerExtension(new DebugFeature());

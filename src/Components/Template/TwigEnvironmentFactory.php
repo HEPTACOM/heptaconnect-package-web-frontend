@@ -33,6 +33,7 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
         iterable $extensions,
         private HttpHandlerUrlProviderInterface $urlProvider,
         private AssetMiddleware $assetMiddleware,
+        private array $containerParameter
     ) {
         $this->themes = $themes->getRenderOrder();
         $this->extensions = \iterable_to_array($extensions);
@@ -86,6 +87,8 @@ final class TwigEnvironmentFactory implements TwigEnvironmentFactoryInterface
 
         $environment->addTokenParser(new ExtendsTokenParser($templateFinder));
         $environment->addTokenParser(new IncludeTokenParser($templateFinder));
+
+        $environment->addGlobal('containerParameter', $this->containerParameter);
 
         return $environment;
     }

@@ -26,6 +26,7 @@
             autowire="true"
         >
             <argument key="$extensions" type="tagged_iterator" tag="twig.extension"/>
+            <argument key="$containerParameter" type="collection"/>
         </service>
 
         <service
