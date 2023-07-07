@@ -16,7 +16,7 @@ final class AccessLoginCommand extends StatusReporterContract
 
     public function supportsTopic(): string
     {
-        return 'access:login';
+        return 'web-frontend:access-protection:login';
     }
 
     protected function run(StatusReportingContextInterface $context): array
