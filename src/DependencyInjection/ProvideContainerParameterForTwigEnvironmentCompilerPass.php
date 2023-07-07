@@ -23,6 +23,23 @@ final class ProvideContainerParameterForTwigEnvironmentCompilerPass implements C
             }
         }
 
-        $twigFactory->setArgument('$containerParameter', $parameters);
+        $unrolled = [];
+
+        foreach ($parameters as $key => $value) {
+            $keys = \explode('.', $key);
+            $pointer = &$unrolled;
+
+            foreach ($keys as $key) {
+                if (!isset($pointer[$key])) {
+                    $pointer[$key] = [];
+                }
+
+                $pointer = &$pointer[$key];
+            }
+
+            $pointer = $value;
+        }
+
+        $twigFactory->setArgument('$containerParameter', $unrolled);
     }
 }
