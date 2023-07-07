@@ -3,11 +3,13 @@
         {% block sidebar_scrollable_content %}
             <ul class="nav nav-pills flex-column">
                 {% block sidebar_content_items %}
-                    {% include '@WebFrontendPackage/ui/component/sidebar/item.html.twig' with {
-                        sidebarItemTargetPath: 'ui',
-                        sidebarItemTitle: 'Default page',
-                        sidebarItemIcon: 'house-door'
-                    } %}
+                    {% if containerParameter.web_frontend_page.default_page_enabled %}
+                        {% include '@WebFrontendPackage/ui/component/sidebar/item.html.twig' with {
+                            sidebarItemTargetPath: containerParameter.web_frontend_page.default_page_path,
+                            sidebarItemTitle: 'Default page',
+                            sidebarItemIcon: 'house-door'
+                        } %}
+                    {% endif %}
                 {% endblock %}
             </ul>
         {% endblock %}

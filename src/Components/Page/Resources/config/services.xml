@@ -14,5 +14,9 @@
             <exclude>../../Contract/AbstractPage.php</exclude>
             <exclude>../../Contract/UiHandlerContract.php</exclude>
         </prototype>
+
+        <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\DefaultPage\DefaultUiHandler">
+            <argument key="$defaultPagePath">%web_frontend_page.default_page_path%</argument>
+        </service>
     </services>
 </container>

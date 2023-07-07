@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\DefaultUiHandler;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\LockscreenUiHandler;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
@@ -24,7 +23,8 @@ final class AccessLoginController extends HttpHandlerContract
         private HttpHandlerUrlProviderInterface $urlProvider,
         private AccessProtectionServiceInterface $accessProtectionService,
         private SessionManagerInterface $sessionManager,
-        private AuthorizationBackendInterface $authorizationBackend
+        private AuthorizationBackendInterface $authorizationBackend,
+        private string $afterLoginPagePath
     ) {
     }
 
@@ -39,7 +39,7 @@ final class AccessLoginController extends HttpHandlerContract
         HttpHandleContextInterface $context
     ): ResponseInterface {
         return $response->withStatus(302)
-            ->withHeader('Location', (string) $this->urlProvider->resolve(DefaultUiHandler::PATH));
+            ->withHeader('Location', (string) $this->urlProvider->resolve($this->afterLoginPagePath));
     }
 
     protected function post(
@@ -47,7 +47,6 @@ final class AccessLoginController extends HttpHandlerContract
         ResponseInterface $response,
         HttpHandleContextInterface $context
     ): ResponseInterface {
-
         $username = $request->getParsedBody()['username'] ?? null;
         $password = $request->getParsedBody()['password'] ?? null;
 
@@ -84,7 +83,7 @@ final class AccessLoginController extends HttpHandlerContract
             ->withHost('')
             ->withPort(null)
             ->withUserInfo('')
-            ->withPath(DefaultUiHandler::PATH);
+            ->withPath($this->afterLoginPagePath);
 
         $response = $context->forward($loginUri);
 

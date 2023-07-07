@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\UiHandlerContract;
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\DefaultUiHandler;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\DefaultPage\DefaultUiHandler;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\LockscreenUiHandler;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface;
@@ -44,6 +44,8 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
      */
     public function __construct(
         iterable $uiHandlers,
+        private string $afterLoginPagePath,
+        private string $afterLogoutPagePath,
         private PortalStorageInterface $portalStorage,
         private ResponseFactoryInterface $responseFactory,
         private HttpHandlerUrlProviderInterface $urlProvider,
@@ -109,7 +111,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
             self::QUERY_PARAMETER_AUTH_TOKEN => $credentials,
         ]);
 
-        return (string) $this->urlProvider->resolve(DefaultUiHandler::PATH)->withQuery($query);
+        return (string) $this->urlProvider->resolve($this->afterLoginPagePath)->withQuery($query);
     }
 
     private function isAllowed(ServerRequestInterface $request): bool
@@ -233,7 +235,7 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
         $this->sessionManager->destroySession($request);
 
         return $this->responseFactory->createResponse(302)
-            ->withHeader('Location', (string) $this->urlProvider->resolve(DefaultUiHandler::PATH));
+            ->withHeader('Location', (string) $this->urlProvider->resolve($this->afterLogoutPagePath));
     }
 
     private function getAuthorizedSession(ServerRequestInterface $request): ?SessionInterface

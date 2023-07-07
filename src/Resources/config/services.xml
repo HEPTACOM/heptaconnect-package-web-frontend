@@ -34,10 +34,18 @@
             autowire="true"
         >
             <argument key="$uiHandlers" type="tagged_iterator" tag="web_frontend.ui_handler"/>
+            <argument key="$afterLoginPagePath">%web_frontend_page.after_login_page_path%</argument>
+            <argument key="$afterLogoutPagePath">%web_frontend_page.after_logout_page_path%</argument>
             <tag
                 name="heptaconnect.http.handler.middleware"
                 priority="-3000"
             />
+        </service>
+        <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessLoginController"
+            autowire="true"
+        >
+            <argument key="$afterLoginPagePath">%web_frontend_page.after_login_page_path%</argument>
         </service>
 
         <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag"/>
