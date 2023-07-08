@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<container
+    xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <defaults
+            autoconfigure="true"
+            autowire="true"
+        />
+
+        <prototype
+            namespace="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\"
+            resource="../../"
+        >
+            <exclude>../../AccessProtectionService.php</exclude>
+            <exclude>../../AccessProtectionServiceInterface.php</exclude>
+        </prototype>
+
+        <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionServiceInterface"
+            class="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionService"
+            autowire="true"
+        >
+            <argument key="$uiHandlers" type="tagged_iterator" tag="web_frontend.ui_handler"/>
+            <argument key="$afterLoginPagePath">%web_frontend_page.after_login_page_path%</argument>
+            <argument key="$afterLogoutPagePath">%web_frontend_page.after_logout_page_path%</argument>
+            <tag
+                name="heptaconnect.http.handler.middleware"
+                priority="-3000"
+            />
+        </service>
+        <service
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessLoginController"
+            autowire="true"
+        >
+            <argument key="$afterLoginPagePath">%web_frontend_page.after_login_page_path%</argument>
+        </service>
+        <service id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\LogoutHandler">
+            <argument key="$afterLogoutPagePath">%web_frontend_access_protection.after_logout_page_path%</argument>
+            <argument key="$logoutPath">%web_frontend_access_protection.logout_path%</argument>
+        </service>
+    </services>
+</container>

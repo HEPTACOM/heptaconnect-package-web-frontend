@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtectionFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\BootstrapThemeFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\PageFeature;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\SessionFeature;
@@ -35,5 +36,6 @@ final class WebFrontendPackage extends PackageContract
         $containerBuilder->registerExtension(new SessionFeature());
         $containerBuilder->registerExtension(new PageFeature());
         $containerBuilder->registerExtension(new BootstrapThemeFeature());
+        $containerBuilder->registerExtension(new AccessProtectionFeature());
     }
 }

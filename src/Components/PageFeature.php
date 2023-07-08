@@ -33,7 +33,6 @@ final class PageFeature extends Extension implements PrependExtensionInterface
             'default_page_enabled' => null, // true | false
             'default_page_path' => 'ui', // 'string'
             'after_login_page_path' => null, // 'string'
-            'after_logout_page_path' => null, // 'string'
         ]);
     }
 
@@ -44,7 +43,6 @@ final class PageFeature extends Extension implements PrependExtensionInterface
         $defaultPageEnabled = (bool) ($config['default_page_enabled'] ?? true);
         $defaultPagePath = (string) $config['default_page_path'];
         $afterLoginPagePath = (string) ($config['after_login_page_path'] ?? $defaultPagePath);
-        $afterLogoutPagePath = (string) ($config['after_logout_page_path'] ?? $defaultPagePath);
 
         $container->setParameter($this->getAlias() . '.enabled', $enabled);
 
@@ -55,7 +53,6 @@ final class PageFeature extends Extension implements PrependExtensionInterface
         $container->setParameter($this->getAlias() . '.default_page_enabled', $defaultPageEnabled);
         $container->setParameter($this->getAlias() . '.default_page_path', $defaultPagePath);
         $container->setParameter($this->getAlias() . '.after_login_page_path', $afterLoginPagePath);
-        $container->setParameter($this->getAlias() . '.after_logout_page_path', $afterLogoutPagePath);
 
         $containerConfigurationPath = __DIR__ . '/Page/Resources/config';
         $xmlLoader = new XmlFileLoader($container, new FileLocator($containerConfigurationPath));

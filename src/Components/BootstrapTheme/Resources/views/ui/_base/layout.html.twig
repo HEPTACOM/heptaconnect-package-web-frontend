@@ -54,7 +54,7 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ path('_access/logout') }}">Sign out</a></li>
+                        <li><a class="dropdown-item" href="{{ path(containerParameter.web_frontend_access_protection.logout_path) }}">Sign out</a></li>
                     </ul>
                 {% endblock %}
             </div>

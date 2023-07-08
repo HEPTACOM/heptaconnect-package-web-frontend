@@ -45,7 +45,6 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
     public function __construct(
         iterable $uiHandlers,
         private string $afterLoginPagePath,
-        private string $afterLogoutPagePath,
         private PortalStorageInterface $portalStorage,
         private ResponseFactoryInterface $responseFactory,
         private HttpHandlerUrlProviderInterface $urlProvider,
@@ -58,10 +57,6 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->isLogoutRequest($request)) {
-            return $this->logout($request);
-        }
-
         if ($this->isAuthorized || $this->isAllowed($request)) {
             return $handler->handle($request);
         }
@@ -223,19 +218,6 @@ final class AccessProtectionService implements AccessProtectionServiceInterface
         return $this->httpKernel->handle(
             $this->serverRequestFactory->createServerRequest('GET', LockscreenUiHandler::PATH)
         );
-    }
-
-    private function isLogoutRequest(ServerRequestInterface $request): bool
-    {
-        return $request->getUri()->getPath() === self::PATH_LOGOUT;
-    }
-
-    private function logout(ServerRequestInterface $request): ResponseInterface
-    {
-        $this->sessionManager->destroySession($request);
-
-        return $this->responseFactory->createResponse(302)
-            ->withHeader('Location', (string) $this->urlProvider->resolve($this->afterLogoutPagePath));
     }
 
     private function getAuthorizedSession(ServerRequestInterface $request): ?SessionInterface
