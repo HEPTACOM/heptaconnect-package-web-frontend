@@ -70,6 +70,8 @@ final class SessionManager implements SessionManagerInterface
             return;
         }
 
+        $this->getSessionFromRequest($request)->clear();
+
         $this->sessionCache->delete($this->getInternalKey($sessionId));
     }
 
