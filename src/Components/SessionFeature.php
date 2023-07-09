@@ -4,42 +4,11 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Container;
+use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\AbstractFeature;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class SessionFeature extends Extension implements PrependExtensionInterface
+final class SessionFeature extends AbstractFeature
 {
-    public static function getName(): string
-    {
-        $class = self::class;
-        $lastNamespaceSeparator = \mb_strrchr($class, '\\');
-
-        if ($lastNamespaceSeparator !== false) {
-            $class = \mb_substr($lastNamespaceSeparator, 1, -7);
-        }
-
-        return Container::underscore('WebFrontend' . $class);
-    }
-
-    public function getAlias()
-    {
-        return self::getName();
-    }
-
-    public function prepend(ContainerBuilder $container): void
-    {
-        $container->prependExtensionConfig($this->getAlias(), [
-            'enabled' => true,
-            'session_lifetime' => 'P30D',
-            'cookie_name' => 'HC_SESSION_ID',
-            'cache_key_prefix' => 'session.storage.',
-        ]);
-    }
-
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = \array_replace_recursive([], ...$configs);
@@ -55,9 +24,21 @@ final class SessionFeature extends Extension implements PrependExtensionInterfac
         $container->setParameter($this->getAlias() . '.cookie_name', $config['cookie_name']);
         $container->setParameter($this->getAlias() . '.cache_key_prefix', $config['cache_key_prefix']);
 
-        $containerConfigurationPath = __DIR__ . '/Session/Resources/config';
-        $xmlLoader = new XmlFileLoader($container, new FileLocator($containerConfigurationPath));
+        $this->loadServicesXml($container);
+    }
 
-        $xmlLoader->load($containerConfigurationPath . '/services.xml');
+    protected function getDefaultConfiguration(): array
+    {
+        return [
+            'enabled' => true,
+            'session_lifetime' => 'P30D',
+            'cookie_name' => 'HC_SESSION_ID',
+            'cache_key_prefix' => 'session.storage.',
+        ];
+    }
+
+    protected function getPath(): string
+    {
+        return __DIR__;
     }
 }

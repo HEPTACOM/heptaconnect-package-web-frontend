@@ -4,43 +4,11 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Container;
+use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\AbstractFeature;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class AccessProtectionFeature extends Extension implements PrependExtensionInterface
+final class AccessProtectionFeature extends AbstractFeature
 {
-    public static function getName(): string
-    {
-        $class = self::class;
-        $lastNamespaceSeparator = \mb_strrchr($class, '\\');
-
-        if ($lastNamespaceSeparator !== false) {
-            $class = \mb_substr($lastNamespaceSeparator, 1, -7);
-        }
-
-        return Container::underscore('WebFrontend' . $class);
-    }
-
-    public function getAlias()
-    {
-        return self::getName();
-    }
-
-    public function prepend(ContainerBuilder $container): void
-    {
-        $container->prependExtensionConfig($this->getAlias(), [
-            'after_login_page_path' => 'ui', // 'string'
-            'after_logout_page_path' => 'ui', // 'string'
-            'login_page_path' => '_access/lockscreen', // 'string'
-            'login_path' => '_access/login', // 'string'
-            'logout_path' => '_access/logout', // 'string'
-        ]);
-    }
-
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = \array_replace_recursive([], ...$configs);
@@ -56,9 +24,22 @@ final class AccessProtectionFeature extends Extension implements PrependExtensio
         $container->setParameter($this->getAlias() . '.after_login_page_path', $afterLoginPagePath);
         $container->setParameter($this->getAlias() . '.after_logout_page_path', $afterLogoutPagePath);
 
-        $containerConfigurationPath = __DIR__ . '/AccessProtection/Resources/config';
-        $xmlLoader = new XmlFileLoader($container, new FileLocator($containerConfigurationPath));
+        $this->loadServicesXml($container);
+    }
 
-        $xmlLoader->load($containerConfigurationPath . '/services.xml');
+    protected function getDefaultConfiguration(): array
+    {
+        return [
+            'after_login_page_path' => 'ui', // 'string'
+            'after_logout_page_path' => 'ui', // 'string'
+            'login_page_path' => '_access/lockscreen', // 'string'
+            'login_path' => '_access/login', // 'string'
+            'logout_path' => '_access/logout', // 'string'
+        ];
+    }
+
+    protected function getPath(): string
+    {
+        return __DIR__;
     }
 }

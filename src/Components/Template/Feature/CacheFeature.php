@@ -4,39 +4,11 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Feature;
 
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Container;
+use Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection\AbstractFeature;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class CacheFeature extends Extension implements PrependExtensionInterface
+final class CacheFeature extends AbstractFeature
 {
-    public static function getName(): string
-    {
-        $class = self::class;
-        $lastNamespaceSeparator = \mb_strrchr($class, '\\');
-
-        if ($lastNamespaceSeparator !== false) {
-            $class = \mb_substr($lastNamespaceSeparator, 1, -7);
-        }
-
-        return Container::underscore('WebFrontendTemplate' . $class);
-    }
-
-    public function getAlias()
-    {
-        return self::getName();
-    }
-
-    public function prepend(ContainerBuilder $container): void
-    {
-        $container->prependExtensionConfig($this->getAlias(), [
-            'enabled' => true,
-        ]);
-    }
-
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = \array_replace_recursive([], ...$configs);
@@ -48,9 +20,23 @@ final class CacheFeature extends Extension implements PrependExtensionInterface
             return;
         }
 
-        $containerConfigurationPath = __DIR__ . '/Cache/Resources/config';
-        $xmlLoader = new XmlFileLoader($container, new FileLocator($containerConfigurationPath));
+        $this->loadServicesXml($container);
+    }
 
-        $xmlLoader->load($containerConfigurationPath . '/services.xml');
+    protected function getDefaultConfiguration(): array
+    {
+        return [
+            'enabled' => true,
+        ];
+    }
+
+    protected static function getFeaturePrefix(): string
+    {
+        return parent::getFeaturePrefix() . 'Template';
+    }
+
+    protected function getPath(): string
+    {
+        return __DIR__;
     }
 }
