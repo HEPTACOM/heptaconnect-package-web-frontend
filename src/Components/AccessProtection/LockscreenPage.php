@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\AbstractPage;
 
