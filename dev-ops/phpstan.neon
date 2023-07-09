@@ -13,3 +13,7 @@ parameters:
 	tmpDir: ../.build/phpstan/
 	scanDirectories:
 		- ../vendor/
+	ignoreErrors:
+		-
+			message: '#Offset string on array\{\} in isset\(\) does not exist#'
+			path: ../src/DependencyInjection/ProvideContainerParameterForTwigEnvironmentCompilerPass.php
