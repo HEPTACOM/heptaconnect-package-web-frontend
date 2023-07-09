@@ -30,7 +30,12 @@ final class SessionMiddleware implements MiddlewareInterface
         try {
             $response = $handler->handle($request);
 
-            return $this->sessionManager->alterResponse($session, $response);
+            // if someone else set a session, we would likely overwrite it with an old one, so we better skip
+            if (!$response->hasHeader(SessionManager::RESPONSE_HEADER_SESSION)) {
+                return $this->sessionManager->alterResponse($session, $response);
+            }
+
+            return $response;
         } catch (\Throwable $throwable) {
             $this->sessionManager->saveSession($session);
 

@@ -15,6 +15,8 @@ final class SessionManager implements SessionManagerInterface
 {
     public const REQUEST_ATTRIBUTE_SESSION = 'session';
 
+    public const RESPONSE_HEADER_SESSION = 'X-Session-ID';
+
     private \DateInterval $sessionLifetime;
 
     public function __construct(
@@ -102,7 +104,7 @@ final class SessionManager implements SessionManagerInterface
 
         return $response
             ->withHeader('Set-Cookie', $setCookieHeader)
-            ->withHeader('X-Session-ID', $session->getId());
+            ->withHeader(self::RESPONSE_HEADER_SESSION, $session->getId());
     }
 
     public function saveSession(SessionInterface $session): void

@@ -67,10 +67,11 @@ final class AccessLoginController extends HttpHandlerContract
         ];
 
         $response = $this->getSuccessResponse($context);
-
         $sessionId = $response->getHeaderLine('X-Session-ID');
         $session = $this->sessionManager->getSessionFromId($sessionId);
+
         $session->set('profile', $profile);
+        $this->sessionManager->saveSession($session);
 
         return $response;
     }
