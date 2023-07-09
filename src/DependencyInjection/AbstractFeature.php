@@ -45,7 +45,7 @@ abstract class AbstractFeature extends Extension implements PrependExtensionInte
         $xmlLoader->load($containerConfigurationPath . '/services.xml');
     }
 
-    protected final static function getShortClassNameWithoutSuffix(): string
+    final protected static function getShortClassNameWithoutSuffix(): string
     {
         $class = static::class;
         $lastNamespaceSeparator = \mb_strrchr($class, '\\');

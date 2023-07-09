@@ -12,7 +12,6 @@ use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\Sessio
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Traversable;
 use Twig\Environment;
 
 final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFactoryInterface
@@ -55,7 +54,7 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
             $sessionNotifications = $session->get('notifications') ?? [];
             $notifications->push($sessionNotifications);
 
-            $notifications = new class ($session, $notifications) implements \IteratorAggregate {
+            $notifications = new class($session, $notifications) implements \IteratorAggregate {
                 public function __construct(
                     private SessionInterface $session,
                     private \Traversable $notifications
