@@ -9,16 +9,45 @@ Read more in the [documentation](https://heptaconnect.io/).
 
 ### Features
 
-* Twig templates to build UI
-* Session utilities
-* Login
-* AccessProtection
-* ErrorHandler
-* Notification
-* PageRenderer
-* Twig
-* AssetHandler
-* UiHandlerContract
+#### Twig
+
+Build web page using [Twig templates](https://twig.symfony.com/doc/3.x/).
+Twig provides a basic infrastructure for replacements and extensibility by portals, extensions and other packages.
+
+
+#### Bootstrap
+
+A basic page structure is provided with a topbar, sidebar, main content area and notifications.
+The page is built using [Bootstrap](https://getbootstrap.com/docs/5.3/).
+It supports automatic and manual dark mode.
+
+![Layout built using Bootstrap](docs/img/Bootstrap_layout.png)
+
+
+#### Themes
+
+Packages can provide custom assets, templates and influence each other to allow full customization to build your own web page.
+
+
+#### Access protection
+
+All paths handled using the `UiHandlerContract` are protected by default.
+You can make exceptions and make publicly available sites.
+Logins can be achieved using different provided functionalities: one time login, [htpasswd](https://httpd.apache.org/docs/current/programs/htpasswd.html)-alike user storage, custom authentication backends.
+
+
+#### More
+
+- Cookie based browser sessions
+- Notification
+- Error handling
+- Debugging
+
+
+#### Configurable Feature Separation
+
+A lot of features can be configured and disabled to ensure you can build your application instead of adapting yourself to the application.
+Read more about the configuration in our [documentation](./docs/index.md).
 
 
 ## System requirements
