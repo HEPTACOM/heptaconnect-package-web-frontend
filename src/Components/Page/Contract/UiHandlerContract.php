@@ -13,6 +13,10 @@ use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerStackInterfac
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Describes an HTTP handler, that is handling human requests and therefore has to behave well for web browsers.
+ * It supports basic ACL using @see isProtected
+ */
 abstract class UiHandlerContract extends HttpHandlerContract
 {
     private ServerRequestInterface $handlingRequest;
@@ -40,11 +44,18 @@ abstract class UiHandlerContract extends HttpHandlerContract
         }
     }
 
+    /**
+     * Returns a state, whether protection is needed.
+     * If protection is needed, the AccessProtection feature can validate requests against this.
+     */
     public function isProtected(ServerRequestInterface $request): bool
     {
         return true;
     }
 
+    /**
+     * Render the given page and return an HTML response.
+     */
     protected function render(AbstractPage $page): ResponseInterface
     {
         /** @var WebPageRendererInterface $pageRenderer */
@@ -53,6 +64,9 @@ abstract class UiHandlerContract extends HttpHandlerContract
         return $pageRenderer->render($page, $this->handlingRequest, $this->handlingContext);
     }
 
+    /**
+     * Store a notification storage so it can be rendered later.
+     */
     protected function notify(string $type, string $message): void
     {
         /** @var SessionManagerInterface $sessionManager */
