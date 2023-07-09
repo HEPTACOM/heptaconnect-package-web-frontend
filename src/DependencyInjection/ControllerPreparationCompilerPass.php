@@ -26,7 +26,7 @@ final class ControllerPreparationCompilerPass implements CompilerPassInterface
 
             if (\str_starts_with($defId, 'Heptacom\\HeptaConnect\\Package\\WebFrontend') && \is_subclass_of($definition->getClass(), HttpHandlerContract::class)) {
                 $definition->addTag('heptaconnect.flow_component.web_http_handler_source', [
-                    'source' => WebFrontendPackage::class
+                    'source' => WebFrontendPackage::class,
                 ]);
             }
         }

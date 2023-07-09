@@ -50,7 +50,6 @@ final class CacheClearCommand extends StatusReporterContract
 
             if (\is_dir($nodePath)) {
                 $this->delete($nodePath);
-
             } elseif (\is_file($nodePath)) {
                 \unlink($nodePath);
             }

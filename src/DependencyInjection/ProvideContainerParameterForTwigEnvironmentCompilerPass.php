@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\DependencyInjection;
 
-use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\UiHandlerContract;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 final class ProvideContainerParameterForTwigEnvironmentCompilerPass implements CompilerPassInterface
 {

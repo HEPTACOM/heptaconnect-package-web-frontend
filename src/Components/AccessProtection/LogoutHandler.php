@@ -24,11 +24,6 @@ final class LogoutHandler extends HttpHandlerContract
     ) {
     }
 
-    protected function supports(): string
-    {
-        return $this->logoutPath;
-    }
-
     public function handle(
         ServerRequestInterface $request,
         ResponseInterface $response,
@@ -39,5 +34,10 @@ final class LogoutHandler extends HttpHandlerContract
 
         return $this->responseFactory->createResponse(302)
             ->withHeader('Location', (string) $this->urlProvider->resolve($this->afterLogoutPagePath));
+    }
+
+    protected function supports(): string
+    {
+        return $this->logoutPath;
     }
 }

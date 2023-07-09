@@ -52,9 +52,9 @@ final class LoginHandler extends HttpHandlerContract
         $password = $request->getParsedBody()['password'] ?? null;
 
         if (
-            !\is_string($username) ||
-            !\is_string($password) ||
-            !$this->authorizationBackend->verify($username, $password)
+            !\is_string($username)
+            || !\is_string($password)
+            || !$this->authorizationBackend->verify($username, $password)
         ) {
             return $this->getFailureResponse($request, $context);
         }

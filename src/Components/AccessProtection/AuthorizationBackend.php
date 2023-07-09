@@ -53,7 +53,7 @@ final class AuthorizationBackend implements AuthorizationBackendInterface
             $line = \trim($line);
             [$username] = \explode(':', $line, 2);
 
-            yield \base64_decode($username);
+            yield \base64_decode($username, true);
         }
     }
 
@@ -68,7 +68,7 @@ final class AuthorizationBackend implements AuthorizationBackendInterface
             \touch($storagePath);
         }
 
-        return \fopen($storagePath, 'r+');
+        return \fopen($storagePath, 'r+b');
     }
 
     /**
