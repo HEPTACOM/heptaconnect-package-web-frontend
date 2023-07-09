@@ -8,7 +8,7 @@
 {% block layout %}
     <div class="d-flex align-items-center py-4 bg-body-tertiary">
         <main class="form-signin w-100 m-auto" style="max-width: 300px">
-            <form action="{{ path('_access/login') }}" method="post">
+            <form action="{{ path(containerParameter.web_frontend_access_protection.login_path) }}" method="post">
                 <div class="mb-3 text-center">
                     <img src="{{ sidebarLogoUrl|default(asset('icon/heptaconnect-logo.png')) }}"
                          alt="{{ sidebarLogoAlt|default('Logo: HEPTAconnect') }}"

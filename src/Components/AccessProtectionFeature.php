@@ -28,7 +28,9 @@ final class AccessProtectionFeature extends Extension implements PrependExtensio
     public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig($this->getAlias(), [
+            'after_login_page_path' => 'ui', // 'string'
             'after_logout_page_path' => 'ui', // 'string'
+            'login_path' => '_access/login', // 'string'
             'logout_path' => '_access/logout', // 'string'
         ]);
     }
@@ -36,10 +38,14 @@ final class AccessProtectionFeature extends Extension implements PrependExtensio
     public function load(array $configs, ContainerBuilder $container): void
     {
         $config = \array_replace_recursive([], ...$configs);
+        $loginPath = (string) $config['login_path'];
         $logoutPath = (string) $config['logout_path'];
+        $afterLoginPagePath = (string) $config['after_login_page_path'];
         $afterLogoutPagePath = (string) $config['after_logout_page_path'];
 
+        $container->setParameter($this->getAlias() . '.login_path', $loginPath);
         $container->setParameter($this->getAlias() . '.logout_path', $logoutPath);
+        $container->setParameter($this->getAlias() . '.after_login_page_path', $afterLoginPagePath);
         $container->setParameter($this->getAlias() . '.after_logout_page_path', $afterLogoutPagePath);
 
         $containerConfigurationPath = __DIR__ . '/AccessProtection/Resources/config';

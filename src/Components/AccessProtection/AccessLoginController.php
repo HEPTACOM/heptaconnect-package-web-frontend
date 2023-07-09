@@ -16,21 +16,20 @@ use Ramsey\Uuid\Uuid;
 
 final class AccessLoginController extends HttpHandlerContract
 {
-    public const PATH = '_access/login';
-
     public function __construct(
         private UriFactoryInterface $uriFactory,
         private HttpHandlerUrlProviderInterface $urlProvider,
         private AccessProtectionServiceInterface $accessProtectionService,
         private SessionManagerInterface $sessionManager,
         private AuthorizationBackendInterface $authorizationBackend,
+        private string $loginPath,
         private string $afterLoginPagePath
     ) {
     }
 
     protected function supports(): string
     {
-        return self::PATH;
+        return $this->loginPath;
     }
 
     protected function get(
