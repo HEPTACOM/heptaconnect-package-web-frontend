@@ -87,7 +87,6 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
     {
         $requestPath = $request->getUri()->getPath();
 
-        /** @var UiHandlerContract $ui */
         foreach ($this->uiHandlers as $ui) {
             if ($requestPath !== $ui->getPath()) {
                 continue;
@@ -139,11 +138,6 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
         }
 
         [$username, $password] = \explode(':', $credentials, 2);
-
-        if (!\is_string($username) || !\is_string($password)) {
-            return false;
-        }
-
         $hashedPassword = $this->portalStorage->get(self::STORAGE_PREFIX_AUTH_TOKEN . $username);
 
         if (!\is_string($hashedPassword)) {
@@ -169,22 +163,16 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
 
     private function hasAuthorizedSession(ServerRequestInterface $request): bool
     {
-        if (!$this->sessionManager->hasSession($request)) {
-            return false;
-        }
-
         $session = $this->sessionManager->getSessionFromRequest($request);
 
-        return $session->has(self::SESSION_KEY_AUTHORIZED);
+        return $session?->has(self::SESSION_KEY_AUTHORIZED) ?? false;
     }
 
     private function withAuthorizedSession(
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
-        $session = $this->getAuthorizedSession($request);
-
-        return $this->sessionManager->alterResponse($session, $response);
+        return $this->sessionManager->alterResponse($this->getAuthorizedSession($request), $response);
     }
 
     private function createUnauthorizedResponse(): ResponseInterface
@@ -194,13 +182,9 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
         )->withStatus(401);
     }
 
-    private function getAuthorizedSession(ServerRequestInterface $request): ?SessionInterface
+    private function getAuthorizedSession(ServerRequestInterface $request): SessionInterface
     {
-        if ($this->sessionManager->hasSession($request)) {
-            $session = $this->sessionManager->getSessionFromRequest($request);
-        } else {
-            $session = $this->sessionManager->createSession($request);
-        }
+        $session = $this->sessionManager->getSessionFromRequest($request) ?? $this->sessionManager->createSession($request);
 
         $session->set(self::SESSION_KEY_AUTHORIZED, true);
 

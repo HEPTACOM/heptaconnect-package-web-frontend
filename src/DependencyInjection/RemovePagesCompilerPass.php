@@ -13,7 +13,9 @@ final class RemovePagesCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         foreach ($container->getDefinitions() as $definitionId => $definition) {
-            if (\is_a($definition->getClass(), AbstractPage::class, true)) {
+            $class = $definition->getClass();
+
+            if ($class !== null && \is_a($class, AbstractPage::class, true)) {
                 $container->removeDefinition($definitionId);
             }
         }

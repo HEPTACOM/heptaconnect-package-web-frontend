@@ -16,9 +16,14 @@ final class PageFeature extends Extension implements PrependExtensionInterface
 {
     public static function getName(): string
     {
-        $classBaseName = substr(strrchr(self::class, '\\'), 1, -7);
+        $class = self::class;
+        $lastNamespaceSeparator = \mb_strrchr($class, '\\');
 
-        return Container::underscore('WebFrontend' . $classBaseName);
+        if ($lastNamespaceSeparator !== false) {
+            $class = \mb_substr($lastNamespaceSeparator, 1, -7);
+        }
+
+        return Container::underscore('WebFrontend' . $class);
     }
 
     public function getAlias()

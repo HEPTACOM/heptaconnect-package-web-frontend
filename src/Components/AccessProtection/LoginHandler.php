@@ -71,6 +71,10 @@ final class LoginHandler extends HttpHandlerContract
         $sessionId = $response->getHeaderLine('X-Session-ID');
         $session = $this->sessionManager->getSessionFromId($sessionId);
 
+        if ($session === null) {
+            throw new \UnexpectedValueException('Session could not be fetched to add profile data', 1688914000);
+        }
+
         $session->set('profile', $profile);
         $this->sessionManager->saveSession($session);
 

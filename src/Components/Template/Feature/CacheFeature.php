@@ -15,9 +15,14 @@ final class CacheFeature extends Extension implements PrependExtensionInterface
 {
     public static function getName(): string
     {
-        $classBaseName = substr(strrchr(self::class, '\\'), 1, -7);
+        $class = self::class;
+        $lastNamespaceSeparator = \mb_strrchr($class, '\\');
 
-        return Container::underscore('WebFrontendTemplate' . $classBaseName);
+        if ($lastNamespaceSeparator !== false) {
+            $class = \mb_substr($lastNamespaceSeparator, 1, -7);
+        }
+
+        return Container::underscore('WebFrontendTemplate' . $class);
     }
 
     public function getAlias()

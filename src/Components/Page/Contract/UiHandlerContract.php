@@ -19,13 +19,6 @@ abstract class UiHandlerContract extends HttpHandlerContract
 
     private HttpHandleContextInterface $handlingContext;
 
-    private ?ContainerInterface $container = null;
-
-    public function setContainer(ContainerInterface $container): void
-    {
-        $this->container = $container;
-    }
-
     public function handle(
         ServerRequestInterface $request,
         ResponseInterface $response,
@@ -55,7 +48,7 @@ abstract class UiHandlerContract extends HttpHandlerContract
     protected function render(AbstractPage $page): ResponseInterface
     {
         /** @var WebPageRendererInterface $pageRenderer */
-        $pageRenderer = $this->container->get(WebPageRendererInterface::class);
+        $pageRenderer = $this->handlingContext->getContainer()->get(WebPageRendererInterface::class);
 
         return $pageRenderer->render($page, $this->handlingRequest, $this->handlingContext);
     }
@@ -70,7 +63,7 @@ abstract class UiHandlerContract extends HttpHandlerContract
     private function getNotifications(): NotificationBag
     {
         /** @var NotificationBag $notifications */
-        $notifications = $this->container->get(NotificationBag::class);
+        $notifications = $this->handlingContext->getContainer()->get(NotificationBag::class);
 
         return $notifications;
     }

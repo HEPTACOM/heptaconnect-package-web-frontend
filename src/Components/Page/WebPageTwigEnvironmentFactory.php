@@ -33,6 +33,11 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
                     static fn (array $matches): string => \strtoupper($matches[1]),
                     $twigKey
                 );
+
+                if (!\is_string($twigKey)) {
+                    continue;
+                }
+
                 $twig->addGlobal($twigKey, $attribute);
             }
         }
@@ -61,7 +66,7 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
         return $request->getUri()->getPath();
     }
 
-    private function getCurrentUri(ServerRequestInterface $request): ?string
+    private function getCurrentUri(ServerRequestInterface $request): string
     {
         return (string) $request->getUri();
     }

@@ -52,8 +52,13 @@ final class AuthorizationBackend implements AuthorizationBackendInterface
         while (($line = \fgets($resource)) !== false) {
             $line = \trim($line);
             [$username] = \explode(':', $line, 2);
+            $result = \base64_decode($username, true);
 
-            yield \base64_decode($username, true);
+            if ($result === false) {
+                continue;
+            }
+
+            yield $result;
         }
     }
 
@@ -68,7 +73,13 @@ final class AuthorizationBackend implements AuthorizationBackendInterface
             \touch($storagePath);
         }
 
-        return \fopen($storagePath, 'r+b');
+        $result = \fopen($storagePath, 'r+b');
+
+        if ($result === false) {
+            throw new \RuntimeException('Failed to open user directory file', 1688913000);
+        }
+
+        return $result;
     }
 
     /**

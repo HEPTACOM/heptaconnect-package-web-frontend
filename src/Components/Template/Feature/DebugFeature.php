@@ -15,9 +15,14 @@ final class DebugFeature extends Extension implements PrependExtensionInterface
 {
     public static function getName(): string
     {
-        $classBaseName = substr(strrchr(self::class, '\\'), 1, -7);
+        $class = self::class;
+        $lastNamespaceSeparator = \mb_strrchr($class, '\\');
 
-        return Container::underscore('WebFrontendTemplate' . $classBaseName);
+        if ($lastNamespaceSeparator !== false) {
+            $class = \mb_substr($lastNamespaceSeparator, 1, -7);
+        }
+
+        return Container::underscore('WebFrontendTemplate' . $class);
     }
 
     public function getAlias()
@@ -40,7 +45,7 @@ final class DebugFeature extends Extension implements PrependExtensionInterface
         $htmlRenderer = $config['html_error_renderer'] ?? true;
 
         $container->setParameter($this->getAlias() . '.enabled', $enabled);
-        $container->setParameter($this->getAlias() . '.html_error_renderer', (bool) ($enabled && $htmlRenderer));
+        $container->setParameter($this->getAlias() . '.html_error_renderer', $enabled && $htmlRenderer);
 
         if (!$enabled) {
             return;

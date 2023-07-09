@@ -31,7 +31,9 @@ final class SessionManager implements SessionManagerInterface
 
     public function hasSession(ServerRequestInterface $request): bool
     {
-        return $this->exists($this->getSessionIdFromRequest($request));
+        $sessionId = $this->getSessionIdFromRequest($request);
+
+        return $sessionId !== null && $this->exists($sessionId);
     }
 
     public function getSessionFromRequest(ServerRequestInterface $request): ?SessionInterface
@@ -44,19 +46,19 @@ final class SessionManager implements SessionManagerInterface
 
         $sessionId = $this->getSessionIdFromRequest($request);
 
-        if (!$this->exists($sessionId)) {
+        if ($sessionId === null || !$this->exists($sessionId)) {
             return null;
         }
 
         return $this->createSessionFromId($sessionId);
     }
 
-    public function createSession(ServerRequestInterface $request): ?SessionInterface
+    public function createSession(ServerRequestInterface $request): SessionInterface
     {
         $sessionId = $this->getSessionIdFromRequest($request);
 
-        if ($this->exists($sessionId)) {
-            throw new \Exception('Session is already started');
+        if ($sessionId !== null && $this->exists($sessionId)) {
+            throw new \UnexpectedValueException('Session is already started', 1688259000);
         }
 
         $sessionId = \bin2hex(\random_bytes(32));
@@ -68,11 +70,11 @@ final class SessionManager implements SessionManagerInterface
     {
         $sessionId = $this->getSessionIdFromRequest($request);
 
-        if (!$this->exists($sessionId)) {
+        if ($sessionId === null || !$this->exists($sessionId)) {
             return;
         }
 
-        $this->getSessionFromRequest($request)->clear();
+        $this->getSessionFromRequest($request)?->clear();
 
         $this->sessionCache->delete($this->getInternalKey($sessionId));
     }
@@ -117,15 +119,8 @@ final class SessionManager implements SessionManagerInterface
         return $this->cachePrefix . $sessionId;
     }
 
-    /**
-     * @phpstan-assert-if-true string $sessionId
-     */
-    private function exists(?string $sessionId): bool
+    private function exists(string $sessionId): bool
     {
-        if ($sessionId === null) {
-            return false;
-        }
-
         return $this->sessionCache->has($this->getInternalKey($sessionId));
     }
 

@@ -32,7 +32,7 @@ interface SessionManagerInterface
      *
      * @throws \UnexpectedValueException if the request already has a session or session reference
      */
-    public function createSession(ServerRequestInterface $request): ?SessionInterface;
+    public function createSession(ServerRequestInterface $request): SessionInterface;
 
     /**
      * Remove any given session and session reference from the storage.
