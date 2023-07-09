@@ -190,7 +190,7 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
     {
         return $this->httpKernel->handle(
             $this->serverRequestFactory->createServerRequest('GET', LockscreenUiHandler::PATH)
-        );
+        )->withStatus(401);
     }
 
     private function getAuthorizedSession(ServerRequestInterface $request): ?SessionInterface

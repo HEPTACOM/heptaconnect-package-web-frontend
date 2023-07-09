@@ -33,6 +33,6 @@ final class LockscreenUiHandler extends UiHandlerContract
             (bool) ($request->getQueryParams()['isError'] ?? false)
         );
 
-        return $this->render($page)->withStatus(401);
+        return $this->render($page)->withStatus($page->isError() ? 401 : 200);
     }
 }
