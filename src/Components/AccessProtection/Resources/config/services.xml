@@ -26,7 +26,7 @@
         </instanceof>
 
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionServiceInterface"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\Contract\AccessProtectionServiceInterface"
             class="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessProtectionService"
             autowire="true"
         >

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\Contract\AuthorizationBackendInterface;
 use Heptacom\HeptaConnect\Portal\Base\File\Filesystem\Contract\FilesystemInterface;
 
 final class AuthorizationBackend implements AuthorizationBackendInterface

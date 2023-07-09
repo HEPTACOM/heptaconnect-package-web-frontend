@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection;
+namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\Contract;
 
 interface AccessProtectionServiceInterface
 {
