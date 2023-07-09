@@ -6,6 +6,7 @@ namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\Notification;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerContract;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandlerStackInterface;
@@ -54,9 +55,20 @@ abstract class UiHandlerContract extends HttpHandlerContract
 
     protected function notify(string $type, string $message): void
     {
-        $this->getNotifications()->push([
-            new Notification($type, $message),
-        ]);
+        /** @var SessionManagerInterface $sessionManager */
+        $sessionManager = $this->handlingContext->getContainer()->get(SessionManagerInterface::class);
+        $session = $sessionManager->getSessionFromRequest($this->handlingRequest);
+
+        if ($session !== null) {
+            /** @var array $notifications */
+            $notifications = $session->get('notifications') ?? [];
+            $notifications[] = new Notification($type, $message);
+            $session->set('notifications', $notifications);
+        } else {
+            $this->getNotifications()->push([
+                new Notification($type, $message),
+            ]);
+        }
     }
 
     private function getNotifications(): NotificationBag

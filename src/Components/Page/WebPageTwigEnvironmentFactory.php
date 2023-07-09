@@ -6,15 +6,19 @@ namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageTwigEnvironmentFactoryInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionInterface;
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionManagerInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Contract\TwigEnvironmentFactoryInterface;
 use Heptacom\HeptaConnect\Portal\Base\Web\Http\Contract\HttpHandleContextInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Traversable;
 use Twig\Environment;
 
 final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFactoryInterface
 {
     public function __construct(
         private NotificationBag $notifications,
+        private SessionManagerInterface $sessionManager,
         private TwigEnvironmentFactoryInterface $twigEnvironmentFactory,
     ) {
     }
@@ -42,7 +46,30 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
             }
         }
 
-        $twig->addGlobal('notifications', $this->notifications);
+        $notifications = new NotificationBag($this->notifications);
+        $session = $this->sessionManager->getSessionFromRequest($request);
+
+        if ($session !== null) {
+            $notifications->push($session->get('notifications') ?? []);
+
+            $notifications = new class ($session, $notifications) implements \IteratorAggregate {
+                public function __construct(
+                    private SessionInterface $session,
+                    private \Traversable $notifications
+                ) {
+                }
+
+                public function getIterator(): \Traversable
+                {
+                    // delete session notifications as soon as they are accessed so we can expect them to be delivered
+                    $this->session->delete('notifications');
+
+                    return $this->notifications;
+                }
+            };
+        }
+
+        $twig->addGlobal('notifications', $notifications);
         $twig->addGlobal('currentPath', $this->getCurrentPath($request));
         $twig->addGlobal('currentUri', $this->getCurrentUri($request));
         $twig->addGlobal('colorScheme', $this->getColorScheme($request));
