@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Ramsey\Uuid\Uuid;
 
-final class AccessLoginController extends HttpHandlerContract
+final class LoginHandler extends HttpHandlerContract
 {
     public function __construct(
         private UriFactoryInterface $uriFactory,

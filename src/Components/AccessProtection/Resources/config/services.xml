@@ -32,7 +32,7 @@
             />
         </service>
         <service
-            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\AccessLoginController"
+            id="Heptacom\HeptaConnect\Package\WebFrontend\Components\AccessProtection\LoginHandler"
             autowire="true"
         >
             <argument key="$loginPath">%web_frontend_access_protection.login_path%</argument>
