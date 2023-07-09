@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Page;
 
+use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\Notification;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Notification\NotificationBag;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Page\Contract\WebPageTwigEnvironmentFactoryInterface;
 use Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\Contract\SessionInterface;
@@ -50,7 +51,9 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
         $session = $this->sessionManager->getSessionFromRequest($request);
 
         if ($session !== null) {
-            $notifications->push($session->get('notifications') ?? []);
+            /** @var array<Notification> $sessionNotifications */
+            $sessionNotifications = $session->get('notifications') ?? [];
+            $notifications->push($sessionNotifications);
 
             $notifications = new class ($session, $notifications) implements \IteratorAggregate {
                 public function __construct(
