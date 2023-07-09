@@ -39,6 +39,7 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
      */
     public function __construct(
         iterable $uiHandlers,
+        private string $loginPagePath,
         private PortalStorageInterface $portalStorage,
         private ResponseFactoryInterface $responseFactory,
         private HttpHandlerUrlProviderInterface $urlProvider,
@@ -189,7 +190,7 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
     private function createUnauthorizedResponse(): ResponseInterface
     {
         return $this->httpKernel->handle(
-            $this->serverRequestFactory->createServerRequest('GET', LockscreenUiHandler::PATH)
+            $this->serverRequestFactory->createServerRequest('GET', $this->loginPagePath)
         )->withStatus(401);
     }
 

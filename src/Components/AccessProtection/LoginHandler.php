@@ -22,6 +22,7 @@ final class LoginHandler extends HttpHandlerContract
         private SessionManagerInterface $sessionManager,
         private AuthorizationBackendInterface $authorizationBackend,
         private string $loginPath,
+        private string $loginPagePath,
         private string $afterLoginPagePath
     ) {
     }
@@ -97,7 +98,7 @@ final class LoginHandler extends HttpHandlerContract
         ServerRequestInterface $request,
         HttpHandleContextInterface $context
     ): ResponseInterface {
-        $uri = $this->uriFactory->createUri(LockscreenUiHandler::PATH)
+        $uri = $this->uriFactory->createUri($this->loginPagePath)
             ->withScheme('')
             ->withHost('')
             ->withPort(null)

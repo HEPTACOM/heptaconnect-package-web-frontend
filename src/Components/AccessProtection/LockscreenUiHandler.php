@@ -11,7 +11,10 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class LockscreenUiHandler extends UiHandlerContract
 {
-    public const PATH = 'ui/lockscreen';
+    public function __construct(
+        private string $loginPagePath
+    ) {
+    }
 
     public function isProtected(ServerRequestInterface $request): bool
     {
@@ -20,7 +23,7 @@ final class LockscreenUiHandler extends UiHandlerContract
 
     protected function supports(): string
     {
-        return self::PATH;
+        return $this->loginPagePath;
     }
 
     protected function get(
