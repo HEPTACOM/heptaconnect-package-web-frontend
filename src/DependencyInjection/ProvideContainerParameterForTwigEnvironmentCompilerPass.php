@@ -24,15 +24,15 @@ final class ProvideContainerParameterForTwigEnvironmentCompilerPass implements C
         $unrolled = [];
 
         foreach ($parameters as $key => $value) {
-            $keys = \explode('.', $key);
+            $keyParts = \explode('.', $key);
             $pointer = &$unrolled;
 
-            foreach ($keys as $key) {
-                if (!isset($pointer[$key])) {
-                    $pointer[$key] = [];
+            foreach ($keyParts as $keyPart) {
+                if (!isset($pointer[$keyPart])) {
+                    $pointer[$keyPart] = [];
                 }
 
-                $pointer = &$pointer[$key];
+                $pointer = &$pointer[$keyPart];
             }
 
             $pointer = $value;
