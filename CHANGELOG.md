@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.0.0] - 2023-07-10
+
+### Added
+
 - Require `php: >=8.0`
 - Add composer dependency `ext-filter: *` to validate user input in PHP ini settings
 - Add composer dependency `symfony/dependency-injection: ^5.0 || ^6.0` and `symfony/config: ^5.0 || ^6.0` as compiler passes, services.xml files and extensions are used
@@ -91,13 +105,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Symfony extension `web_frontend_access_protection` configuration `login_page_path` to set the path to the login form page
 - Add Symfony extension `web_frontend_access_protection` configuration `login_path` to set the path to the login action
 - Add Symfony extension `web_frontend_access_protection` configuration `logout_path` to set the path to the logout action
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
