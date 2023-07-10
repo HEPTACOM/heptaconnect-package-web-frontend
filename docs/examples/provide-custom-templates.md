@@ -3,12 +3,12 @@
 Provide Twig templates for own pages or to override existing templates.
 Every class can be a theme.
 Making any HEPTAconnect package a theme is the low-code approach shown here. 
-It is recommended to choose speaking short class names, as these form the theme name in the standard.
+It is recommended to choose speaking short class names, as these form the theme name by default.
 
 
 ## Prerequisites
 
-* Use [the package](./use-package.md)
+* [Use the package](./use-package.md)
 
 
 ## Any package

@@ -32,7 +32,7 @@ Packages can provide custom assets, templates and influence each other to allow 
 #### Access protection
 
 All paths handled using the `UiHandlerContract` are protected by default.
-You can make exceptions and make publicly available sites.
+You can make exceptions and make publicly available pages.
 Logins can be achieved using different provided functionalities: one time login, [htpasswd](https://httpd.apache.org/docs/current/programs/htpasswd.html)-alike user storage, custom authentication backends.
 
 

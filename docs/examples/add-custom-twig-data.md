@@ -11,7 +11,7 @@
 
 ###### src/Middleware/AddCurrentTimeMiddleware.php
 
-`twig.`-prefix request attributes are forwarded as twig variables
+Request attributes that are prefixed with `twig.` are forwarded as twig variables.
 
 ```php
 <?php
