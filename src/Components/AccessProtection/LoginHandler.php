@@ -66,37 +66,18 @@ final class LoginHandler extends HttpHandlerContract
             'lastName' => '',
         ];
 
-        $response = $this->getSuccessResponse($context);
-        $sessionId = $response->getHeaderLine('X-Session-ID');
-        $session = $this->sessionManager->getSessionFromId($sessionId);
+        $session = $this->sessionManager->getSessionFromRequest($request) ?? $this->sessionManager->createSession($request);
 
         if ($session === null) {
             throw new \UnexpectedValueException('Session could not be fetched to add profile data', 1688914000);
         }
 
+        $session->set('authorized', true);
         $session->set('profile', $profile);
         $this->sessionManager->saveSession($session);
 
-        return $response;
-    }
-
-    private function getSuccessResponse(HttpHandleContextInterface $context): ResponseInterface
-    {
-        $loginUrl = $this->accessProtectionService->generateLoginUrl();
-        $loginUri = $this->uriFactory->createUri($loginUrl)
-            ->withScheme('')
-            ->withHost('')
-            ->withPort(null)
-            ->withUserInfo('')
-            ->withPath($this->afterLoginPagePath);
-
-        $response = $context->forward($loginUri);
-
-        if ($response->getStatusCode() === 307) {
-            $response = $response->withStatus(302);
-        }
-
-        return $response;
+        return $response->withStatus(302)
+            ->withHeader('Location', (string) $this->urlProvider->resolve($this->afterLoginPagePath));
     }
 
     private function getFailureResponse(

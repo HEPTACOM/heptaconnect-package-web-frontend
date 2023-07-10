@@ -74,6 +74,7 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
         $twig->addGlobal('notifications', $notifications);
         $twig->addGlobal('currentPath', $this->getCurrentPath($request));
         $twig->addGlobal('currentUri', $this->getCurrentUri($request));
+        $twig->addGlobal('currentUserProfile', $this->getCurrentUserProfile($request));
         $twig->addGlobal('colorScheme', $this->getColorScheme($request));
 
         return $twig;
@@ -98,5 +99,12 @@ final class WebPageTwigEnvironmentFactory implements WebPageTwigEnvironmentFacto
     private function getCurrentUri(ServerRequestInterface $request): string
     {
         return (string) $request->getUri();
+    }
+
+    private function getCurrentUserProfile(ServerRequestInterface $request): ?array
+    {
+        $session = $this->sessionManager->getSessionFromRequest($request);
+
+        return $session?->get('profile');
     }
 }

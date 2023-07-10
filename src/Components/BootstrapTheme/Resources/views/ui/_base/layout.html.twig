@@ -46,16 +46,20 @@
 
             <div class="d-flex">
                 {% block top_bar_right %}
-                    <button type="button"
-                            class="btn text-white border-0 px-2 py-0 fs-3"
-                            data-bs-toggle="dropdown"
-                            data-bs-auto-close="outside">
-                        <i class="bi bi-person-circle"></i>
-                    </button>
+                    {% if currentUserProfile %}
+                        <button type="button"
+                                class="btn text-white border-0 px-2 py-0 fs-3"
+                                data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
 
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ path(containerParameter.web_frontend_access_protection.logout_path) }}">Sign out</a></li>
-                    </ul>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><span class="h6 dropdown-header">User: {{ currentUserProfile.username }}</span></li>
+
+                            <li><a class="dropdown-item" href="{{ path(containerParameter.web_frontend_access_protection.logout_path) }}">Sign out</a></li>
+                        </ul>
+                    {% endif %}
                 {% endblock %}
             </div>
         </div>

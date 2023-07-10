@@ -188,6 +188,16 @@ final class AccessProtectionMiddleware implements MiddlewareInterface
 
         $session->set(self::SESSION_KEY_AUTHORIZED, true);
 
+        if (!$session->has('profile')) {
+            $session->set('profile', [
+                'id' => \md5(uniqid()),
+                'email' => 'root@localhost',
+                'username' => 'root',
+                'firstName' => '',
+                'lastName' => '',
+            ]);
+        }
+
         return $session;
     }
 }
