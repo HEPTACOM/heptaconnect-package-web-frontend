@@ -7,7 +7,7 @@ namespace Heptacom\HeptaConnect\Package\WebFrontend\Components\Template\Hierarch
 use Twig\Compiler;
 use Twig\Node\IncludeNode;
 
-final class SwInclude extends IncludeNode
+final class InheritedInclude extends IncludeNode
 {
     protected function addGetTemplate(Compiler $compiler): void
     {

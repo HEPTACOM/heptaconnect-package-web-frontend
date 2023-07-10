@@ -22,6 +22,9 @@ final class NodeExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @see InheritedInclude
+     */
     public function getFinder(): TemplateFinderInterface
     {
         return $this->finder;
