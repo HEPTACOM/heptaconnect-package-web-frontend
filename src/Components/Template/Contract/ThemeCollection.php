@@ -35,28 +35,6 @@ final class ThemeCollection extends AbstractObjectCollection
         ));
     }
 
-    public function getTemplatePath(string $themeName): ?string
-    {
-        foreach ($this as $theme) {
-            if ($theme->getThemeName() === $themeName) {
-                return $theme->getThemeTemplatesPath();
-            }
-        }
-
-        return null;
-    }
-
-    public function getAssetPath(string $themeName): ?string
-    {
-        foreach ($this as $theme) {
-            if ($theme->getThemeName() === $themeName) {
-                return $theme->getThemeAssetPath();
-            }
-        }
-
-        return null;
-    }
-
     protected function getT(): string
     {
         return ThemeInterface::class;

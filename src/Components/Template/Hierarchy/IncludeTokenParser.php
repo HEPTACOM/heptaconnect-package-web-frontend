@@ -38,7 +38,7 @@ final class IncludeTokenParser extends AbstractTokenParser
             return new IncludeNode($expr, $variables, $only, $ignoreMissing, $token->getLine(), $this->getTag());
         }
 
-        return new SwInclude($expr, $variables, $only, $ignoreMissing, $token->getLine(), $this->getTag());
+        return new InheritedInclude($expr, $variables, $only, $ignoreMissing, $token->getLine(), $this->getTag());
     }
 
     public function getTag(): string

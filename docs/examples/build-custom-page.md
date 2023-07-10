@@ -84,7 +84,7 @@ class SearchHandler extends UiHandlerContract
 
 Template to render the search form and search results
 
-```html
+```twig
 {% extends '@WebFrontendPackage/ui/_base/layout.html.twig' %}
 {# @var page \Package\Search\SearchPage #}
 
@@ -108,7 +108,7 @@ Template to render the search form and search results
 
 Adds a menu item to the sidebar
 
-```html
+```twig
 {% extends '@WebFrontendPackage/ui/component/sidebar/scrollable-content.html.twig' %}
 
 {% block sidebar_content_items %}

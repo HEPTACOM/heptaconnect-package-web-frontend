@@ -19,10 +19,12 @@ final class NodeExtension extends AbstractExtension
         return [
             new ExtendsTokenParser($this->finder),
             new IncludeTokenParser($this->finder),
-            new ReturnNodeTokenParser(),
         ];
     }
 
+    /**
+     * @see InheritedInclude
+     */
     public function getFinder(): TemplateFinderInterface
     {
         return $this->finder;

@@ -19,7 +19,7 @@ Example to overwrite a block to add an HTML title to the page.
 To overwrite a file your file has to be placed at the same relative path to the theme file root.
 Here: `ui/_base/layout.html.twig`
 
-```html
+```twig
 {% extends '@WebFrontendPackage/ui/_base/layout.html.twig' %}
 
 {% block head_title %}FooBar | {{ parent() }}{% endblock %}
@@ -28,7 +28,7 @@ Here: `ui/_base/layout.html.twig`
 
 ###### src/Resources/views/page/foobar.html.twig
 
-```html
+```twig
 {% extends '@WebFrontendPackage/ui/_base/layout.html.twig' %}
 {# @var page \Package\Page\FooBarPage #}
 
