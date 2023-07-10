@@ -5,6 +5,7 @@
         "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object",
         "ReflectionUnionType", "mixed",
         "opcache_invalidate", "// is guarded by function_exists check, see composer suggests",
+        "FILEINFO_MIME_TYPE", "finfo_buffer", "finfo_open", ",// is guarded by extension_loaded check, see composer suggests",
         "apc_compile_file", "// is guarded by function_exists check",
         "Twig\\Extra\\Intl\\IntlExtension", "// is guarded by class_exists check, see composer suggests"
     ],
