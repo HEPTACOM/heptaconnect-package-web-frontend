@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix login when no session was started yet
+
 ### Security
 
 ## [1.0.0] - 2023-07-10
