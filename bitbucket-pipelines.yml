@@ -31,6 +31,7 @@ definitions:
                 <<: *default-step
                 name: Mirror to Github
                 script:
+                    - git config --global --add safe.directory /opt/atlassian/pipelines/agent/build
                     - git fetch --unshallow origin
                     - git remote add github "git@github.com:HEPTACOM/${BITBUCKET_REPO_SLUG}.git"
                     - git push --force github ${BITBUCKET_BRANCH}
