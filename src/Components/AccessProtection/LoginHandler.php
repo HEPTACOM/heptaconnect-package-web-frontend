@@ -76,8 +76,10 @@ final class LoginHandler extends HttpHandlerContract
         $session->set('profile', $profile);
         $this->sessionManager->saveSession($session);
 
-        return $response->withStatus(302)
+        $response = $response->withStatus(302)
             ->withHeader('Location', (string) $this->urlProvider->resolve($this->afterLoginPagePath));
+
+        return $this->sessionManager->alterResponse($session, $response);
     }
 
     private function getFailureResponse(
