@@ -99,7 +99,7 @@ final class SessionManager implements SessionManagerInterface
             $session->getId(),
             $maxAge,
             $expiration,
-            $this->urlProvider->resolve('')->getPath()
+            \rtrim($this->urlProvider->resolve('/')->getPath(), '/')
         );
 
         $this->setStorage($session->getId(), $session->all());
