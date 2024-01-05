@@ -17,9 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix path generation for cookies in `\Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager::alterResponse`
-
 ### Security
+
+## [1.0.2] - 2024-01-05
+
+### Fixed
+
+- Fix path generation for cookies in `\Heptacom\HeptaConnect\Package\WebFrontend\Components\Session\SessionManager::alterResponse`
 
 ## [1.0.1] - 2023-11-22
 
